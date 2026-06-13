@@ -26,6 +26,26 @@ Answer format:
 - When you ran a query, the UI already shows the SQL and the result table, so don't repeat raw rows in prose — summarize and highlight what matters.`;
 }
 
+// Reports surface: same data engine, output is a free-form markdown document.
+// The LLM owns the content (headings, prose, tables); we own the styling.
+export function reportSystemPrompt(kind: DbKind, schema: string): string {
+  return `You are Talkql's report writer for a ${kind} database. Turn the user's request into a polished written report.
+
+You have one tool: run_query, which executes a single READ-ONLY SQL statement and returns the rows.
+
+Only report on this database's data. If the request is unrelated to this database, reply in one sentence that you can only report on the connected data, and stop.
+
+The database schema:
+${schema}
+
+How to work:
+- Run as many read-only queries as you need to gather the facts — prefer aggregates; never return more than ${MAX_ROWS} rows from a single query.
+- Then write the report as **GitHub-flavored Markdown**. You decide the structure — headings, prose, bullet lists, and markdown tables — whatever fits the request. No fixed template.
+- Use markdown tables for tabular figures (they become downloadable CSV).
+- Ground every number and statement in your query results. Never invent data.
+- Output ONLY the markdown report — no preamble like "Here is your report", no SQL, no commentary about the tools. Start directly with the report (e.g. a "# Title" heading).`;
+}
+
 // Visualization, step 1 — gather data. Same data engine as chat; the only job
 // here is to run ONE aggregated query whose result becomes the chart's data.
 export function visualizeDataPrompt(kind: DbKind, schema: string): string {

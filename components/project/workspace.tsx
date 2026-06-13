@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart3Icon, FileTextIcon, MessageSquareIcon, NetworkIcon } from "lucide-react";
 import { Chat } from "@/components/chat/chat";
 import { Visualization } from "@/components/visualization/visualization";
+import { Reports } from "@/components/reports/reports";
 
 // The project workspace shell: switchable surfaces over one database. Chat is
 // live now; Visualization / Reports / ER diagram land in Phases 3–5 and slot
@@ -34,8 +35,8 @@ export function Workspace() {
       <TabsContent value="visualization" className="min-h-0 flex-1">
         <Visualization />
       </TabsContent>
-      <TabsContent value="reports" className="flex-1">
-        <ComingSoon surface="Reports" />
+      <TabsContent value="reports" className="min-h-0 flex-1">
+        <Reports />
       </TabsContent>
       <TabsContent value="er" className="flex-1">
         <ComingSoon surface="ER diagram" />

@@ -2,7 +2,12 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText, InferAgentUIMessage, Output, stepCountIs, ToolLoopAgent } from "ai";
 import type { DatabaseAdapter, DbKind } from "@/lib/db/types";
 import { createRunQueryTool } from "./tools";
-import { chartConfigPrompt, chatSystemPrompt, visualizeDataPrompt } from "./prompts";
+import {
+  chartConfigPrompt,
+  chatSystemPrompt,
+  reportSystemPrompt,
+  visualizeDataPrompt,
+} from "./prompts";
 import { chartConfigSchema, type ChartConfigSpec } from "./charts";
 
 const openrouter = createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY });
@@ -31,6 +36,19 @@ export function createChatAgent({ kind, schema, adapter, model }: ChatAgentInput
 
 // End-to-end type for useChat — the tool part is typed as `tool-run_query`.
 export type ChatUIMessage = InferAgentUIMessage<ReturnType<typeof createChatAgent>>;
+
+// Reports: one streaming call. Same tool-loop as chat, but the prompt asks for
+// a full markdown document as the final text — no structured output needed.
+export function createReportAgent({ kind, schema, adapter, model }: ChatAgentInput) {
+  return new ToolLoopAgent({
+    model: resolveModel(model),
+    instructions: reportSystemPrompt(kind, schema),
+    tools: { run_query: createRunQueryTool(adapter) },
+    stopWhen: stepCountIs(10),
+  });
+}
+
+export type ReportUIMessage = InferAgentUIMessage<ReturnType<typeof createReportAgent>>;
 
 // Visualization is two calls on purpose. Combining tools + structured output in
 // one call makes weaker models skip the tool and emit an empty chart, so we
