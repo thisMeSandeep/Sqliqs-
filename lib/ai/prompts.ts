@@ -25,3 +25,47 @@ Answer format:
 - A short, direct narrative answer to the question.
 - When you ran a query, the UI already shows the SQL and the result table, so don't repeat raw rows in prose — summarize and highlight what matters.`;
 }
+
+// Visualization, step 1 — gather data. Same data engine as chat; the only job
+// here is to run ONE aggregated query whose result becomes the chart's data.
+export function visualizeDataPrompt(kind: DbKind, schema: string): string {
+  return `You gather the data for a chart of a ${kind} database.
+
+You have one tool: run_query, which executes a single READ-ONLY SQL statement and returns the rows.
+
+Only chart this database's data. If the request is unrelated to this database, reply "unsupported" and do not call the tool.
+
+The database schema:
+${schema}
+
+Your task:
+- Write ONE aggregated, read-only SQL query that produces exactly the data the requested chart needs — grouped and summarized, with clear, chart-ready column aliases (e.g. department_name, headcount). A chart needs few points: never return more than ${MAX_ROWS} rows.
+- You MUST call run_query with that query. Only SELECT — no writes.
+- After the result comes back, reply with the single word "done". Do not describe the data; it is read directly from your query result.`;
+}
+
+// Visualization, step 2 — pick the chart. No tools, no DB; just the columns and
+// a few sample rows from step 1's query, so the model maps columns to axes.
+export function chartConfigPrompt(
+  question: string,
+  columns: string[],
+  sampleRows: (string | number | null)[][]
+): string {
+  return `A user asked for this chart: "${question}".
+
+A SQL query was run and returned these columns: ${columns.join(", ")}.
+Here are up to 5 sample rows (values in column order):
+${JSON.stringify(sampleRows.slice(0, 5))}
+
+Choose the best chart type and map the result columns to the chart:
+- category + one number → bar
+- time series → line (or area for cumulative/volume)
+- parts of a whole → pie
+- two numeric dimensions → scatter
+- a single headline number → kpi
+- when nothing else fits → table
+
+Rules:
+- xKey and every series key MUST be exact names from the columns list above.
+- xKey is the category/label/x-axis column; series are the numeric column(s) to plot.`;
+}
