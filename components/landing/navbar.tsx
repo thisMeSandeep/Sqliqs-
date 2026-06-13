@@ -1,0 +1,55 @@
+import Link from "next/link";
+import { Show } from "@clerk/nextjs";
+import { Container } from "./shared";
+
+// Minimal sticky nav. Solid background (no blur, per the brief), a single 1px
+// bottom border dividing it from the hero. CTA swaps with auth state.
+export function Navbar() {
+  return (
+    <header className="sticky top-0 z-50 border-[#222222] border-b bg-[#0A0A0A]">
+      <Container className="flex h-16 items-center justify-between">
+        <Link href="/" className="font-semibold text-[15px] text-white tracking-tight">
+          Talkql
+        </Link>
+
+        <nav className="hidden items-center gap-8 md:flex">
+          <Link
+            href="/playground"
+            className="text-[#888888] text-sm transition-colors hover:text-[#E5E5E5]"
+          >
+            Playground
+          </Link>
+          <Link
+            href="#features"
+            className="text-[#888888] text-sm transition-colors hover:text-[#E5E5E5]"
+          >
+            Features
+          </Link>
+          <Link
+            href="#pricing"
+            className="text-[#888888] text-sm transition-colors hover:text-[#E5E5E5]"
+          >
+            Pricing
+          </Link>
+        </nav>
+
+        <Show when="signed-out">
+          <Link
+            href="/sign-up"
+            className="rounded-md bg-[#52E8A2] px-3.5 py-1.5 font-medium text-[#0A0A0A] text-sm transition-colors hover:bg-[#6BEEB2]"
+          >
+            Get Started
+          </Link>
+        </Show>
+        <Show when="signed-in">
+          <Link
+            href="/dashboard"
+            className="rounded-md bg-[#52E8A2] px-3.5 py-1.5 font-medium text-[#0A0A0A] text-sm transition-colors hover:bg-[#6BEEB2]"
+          >
+            Dashboard
+          </Link>
+        </Show>
+      </Container>
+    </header>
+  );
+}

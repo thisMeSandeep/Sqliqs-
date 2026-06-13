@@ -1,54 +1,36 @@
-import Link from "next/link";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
+import { Navbar } from "@/components/landing/navbar";
+import { Hero } from "@/components/landing/hero";
+import { TrustBar } from "@/components/landing/trust-bar";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Features } from "@/components/landing/features";
+import { ErCallout } from "@/components/landing/er-callout";
+import { Privacy } from "@/components/landing/privacy";
+import { DatabaseSupport } from "@/components/landing/database-support";
+import { Providers } from "@/components/landing/providers";
+import { Pricing } from "@/components/landing/pricing";
+import { PlaygroundCta } from "@/components/landing/playground-cta";
+import { Footer } from "@/components/landing/footer";
 
-// Minimal index for now — just the auth entry points and a way into the public
-// Playground. The full marketing landing page comes at the end of the project.
+// Dark-only marketing landing. The palette is inlined per-section (not theme
+// tokens), so it renders identically regardless of the app's light/dark class.
+// Each section is its own component; this file is just the running order.
 export default function HomePage() {
   return (
-    <main className="flex min-h-dvh flex-col">
-      <header className="flex items-center justify-between border-b px-6 py-4">
-        <span className="font-semibold text-lg">Talkql</span>
-        <div className="flex items-center gap-2">
-          <Show when="signed-out">
-            <SignInButton>
-              <Button variant="ghost" size="sm">
-                Sign in
-              </Button>
-            </SignInButton>
-            <SignUpButton>
-              <Button size="sm">Sign up</Button>
-            </SignUpButton>
-          </Show>
-          <Show when="signed-in">
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/dashboard">Dashboard</Link>
-            </Button>
-            <UserButton />
-          </Show>
-        </div>
-      </header>
-
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 text-center">
-        <div className="max-w-xl space-y-3">
-          <h1 className="font-bold text-4xl tracking-tight">Talk to your database.</h1>
-          <p className="text-muted-foreground">
-            Query your data in plain English — bring your own database, bring your own key.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="lg">
-            <Link href="/playground">Try the Playground</Link>
-          </Button>
-          <Show when="signed-out">
-            <SignUpButton>
-              <Button variant="outline" size="lg">
-                Connect your database
-              </Button>
-            </SignUpButton>
-          </Show>
-        </div>
-      </div>
-    </main>
+    <div className="min-h-dvh bg-[#0A0A0A] text-[#E5E5E5] antialiased">
+      <Navbar />
+      <main>
+        <Hero />
+        <TrustBar />
+        <HowItWorks />
+        <Features />
+        <ErCallout />
+        <Privacy />
+        <DatabaseSupport />
+        <Providers />
+        <Pricing />
+        <PlaygroundCta />
+      </main>
+      <Footer />
+    </div>
   );
 }
