@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/react": "^3.0.205",
     "@base-ui/react": "^1.5.0",
+    "@clerk/nextjs": "^7.5.2",
     "@openrouter/ai-sdk-provider": "^2.9.1",
     "@radix-ui/react-use-controllable-state": "^1.2.3",
     "@rive-app/react-webgl2": "^4.29.1",
