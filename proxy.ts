@@ -3,7 +3,11 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 // Public by default. We only protect the account-scoped areas; everything else
 // — the landing page, the public Playground, and the API routes the Playground
 // calls — stays open. (Projects/dashboard arrive in Phase 7.)
-const isProtectedRoute = createRouteMatcher(["/dashboard(.*)", "/projects(.*)"]);
+const isProtectedRoute = createRouteMatcher([
+  "/dashboard(.*)",
+  "/projects(.*)",
+  "/settings(.*)",
+]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {

@@ -38,12 +38,13 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import { deleteProject, listProjects, renameProject } from "@/lib/store/projects";
-import { findModel, providerIcon } from "@/lib/ai/models";
+import { findModel, PROVIDER_META, providerIcon } from "@/lib/ai/models";
+import { cn } from "@/lib/utils";
 import { DB_META } from "@/lib/db/meta";
 import type { Project } from "@/lib/store/db";
+import Link from "next/link";
 import { ConnectionWizard } from "@/components/project/connection-wizard";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { GlobalSettingsDialog } from "./global-settings-dialog";
 
 function relativeTime(ts: number): string {
   const mins = Math.floor((Date.now() - ts) / 60000);
@@ -60,7 +61,6 @@ export function Dashboard() {
   const router = useRouter();
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [creating, setCreating] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [renaming, setRenaming] = useState<Project | null>(null);
   const [deleting, setDeleting] = useState<Project | null>(null);
 
@@ -83,13 +83,10 @@ export function Dashboard() {
         </div>
         <div className="flex items-center gap-1">
           <ThemeToggle />
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Settings"
-            onClick={() => setSettingsOpen(true)}
-          >
-            <SettingsIcon className="size-4" />
+          <Button asChild variant="ghost" size="icon-sm" aria-label="Settings">
+            <Link href="/settings">
+              <SettingsIcon className="size-4" />
+            </Link>
           </Button>
           <div className="ml-1">
             <UserButton />
@@ -145,7 +142,6 @@ export function Dashboard() {
       />
       <RenameDialog project={renaming} onClose={() => setRenaming(null)} onRenamed={refresh} />
       <DeleteDialog project={deleting} onClose={() => setDeleting(null)} onDeleted={refresh} />
-      <GlobalSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} onChanged={refresh} />
     </div>
   );
 }
@@ -232,7 +228,11 @@ function ModelBadge({ project }: { project: Project }) {
   return (
     <Badge variant="outline" className="gap-1 font-normal text-muted-foreground">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={providerIcon(project.model.provider)} alt="" className="size-3" />
+      <img
+        src={providerIcon(project.model.provider)}
+        alt=""
+        className={cn("size-3", PROVIDER_META[project.model.provider].darkInvert && "dark:invert")}
+      />
       {label}
     </Badge>
   );

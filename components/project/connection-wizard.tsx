@@ -51,7 +51,7 @@ export function ConnectionWizard({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-xl">
         {/* The form state lives in WizardForm, which Radix unmounts when the
             dialog closes — so each open starts fresh with no reset effect. */}
         {open && <WizardForm onOpenChange={onOpenChange} onCreated={onCreated} />}

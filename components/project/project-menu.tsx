@@ -178,7 +178,7 @@ function ModelDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChangeInternal}>
-      <DialogContent>
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Model &amp; key</DialogTitle>
           <DialogDescription>Choose the model this project uses.</DialogDescription>
