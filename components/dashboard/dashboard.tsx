@@ -76,9 +76,6 @@ export function Dashboard() {
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b bg-background/80 px-6 backdrop-blur">
         <div className="flex items-center gap-2">
-          <div className="grid size-7 place-items-center rounded-md bg-primary text-primary-foreground">
-            <DatabaseIcon className="size-4" />
-          </div>
           <Logo />
         </div>
         <div className="flex items-center gap-1">

@@ -38,18 +38,22 @@ export default function GlobalError({
           WebkitFontSmoothing: "antialiased",
         }}
       >
-        <span
-          style={{
-            fontSize: "15px",
-            fontWeight: 600,
-            letterSpacing: "-0.01em",
-            backgroundImage: "linear-gradient(90deg, #34E0A1, #2EE0B8, #22D3EE)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          Sqliqs
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt="" aria-hidden style={{ height: "18px", width: "auto" }} />
+          <span
+            style={{
+              fontSize: "15px",
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+              backgroundImage: "linear-gradient(90deg, #34E0A1, #2EE0B8, #22D3EE)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            Sqliqs
+          </span>
         </span>
 
         <h1
