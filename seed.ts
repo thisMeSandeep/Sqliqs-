@@ -1,6 +1,9 @@
 import postgres from "postgres";
 
-const sql = postgres(process.env.DATABASE_URL!);
+// Seeding needs write privileges, so prefer the owner role (SEED_DATABASE_URL).
+// DATABASE_URL is the read-only role the playground uses at runtime; fall back
+// to it only if no owner string is set (e.g. before the read-only split).
+const sql = postgres(process.env.SEED_DATABASE_URL ?? process.env.DATABASE_URL!);
 
 // A small but related schema so every surface has something real to show —
 // four tables with foreign keys, which gives the ER diagram its edges:
