@@ -1,20 +1,29 @@
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { createAgentUIStreamResponse, type UIMessage } from "ai";
+import { getAdapter } from "@/lib/db";
+import type { DbKind } from "@/lib/db/types";
+import { createChatAgent } from "@/lib/ai/agent";
 
-// POC round-trip: NL → OpenRouter → streamed text. Phase 2 evolves this to
-// run the query agent against a DatabaseAdapter; for now it just proves the
-// OpenRouter wiring end to end.
-const openrouter = createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY });
+// NL → SQL → table + narrative. The connection travels per request: the
+// playground sends nothing and falls back to our sample DB + default env key;
+// a real project will send its own kind/connection/model (Phase 7). The server
+// holds neither beyond the single request.
+type ChatRequest = {
+  messages: UIMessage[];
+  kind?: DbKind;
+  connectionString?: string;
+  model?: string;
+};
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json();
+  const { messages, kind, connectionString, model }: ChatRequest = await req.json();
 
-  const result = streamText({
-    model: openrouter(process.env.OPENROUTER_DEFAULT_MODEL ?? "openrouter/free"),
-    messages: await convertToModelMessages(messages),
-  });
+  const dbKind = kind ?? "postgres";
+  const conn = connectionString ?? process.env.DATABASE_URL!;
 
-  return result.toUIMessageStreamResponse();
-  
+  const adapter = getAdapter(dbKind, conn);
+  const schema = await adapter.getSchema();
+
+  const agent = createChatAgent({ kind: dbKind, schema, adapter, model });
+
+  return createAgentUIStreamResponse({ agent, uiMessages: messages });
 }
-
