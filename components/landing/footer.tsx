@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/brand/logo";
 import { Container } from "./shared";
 
 const PRODUCT = [
@@ -33,7 +34,7 @@ export function Footer() {
     <footer>
       <Container className="flex flex-col justify-between gap-12 py-16 md:flex-row">
         <div className="max-w-xs">
-          <p className="font-semibold text-white tracking-tight">Talkql</p>
+          <Logo className="text-lg" />
           <p className="mt-3 text-[#888888] text-sm leading-relaxed">
             Natural language querying for any database.
           </p>

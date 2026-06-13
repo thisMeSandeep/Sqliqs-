@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Show } from "@clerk/nextjs";
+import { Logo } from "@/components/brand/logo";
 import { Container } from "./shared";
 
 // Minimal sticky nav. Solid background (no blur, per the brief), a single 1px
@@ -8,8 +9,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-[#222222] border-b bg-[#0A0A0A]">
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="font-semibold text-[15px] text-white tracking-tight">
-          Talkql
+        <Link href="/">
+          <Logo className="text-[15px]" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

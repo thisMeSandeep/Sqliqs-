@@ -45,6 +45,7 @@ import type { Project } from "@/lib/store/db";
 import Link from "next/link";
 import { ConnectionWizard } from "@/components/project/connection-wizard";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Logo } from "@/components/brand/logo";
 
 function relativeTime(ts: number): string {
   const mins = Math.floor((Date.now() - ts) / 60000);
@@ -79,7 +80,7 @@ export function Dashboard() {
           <div className="grid size-7 place-items-center rounded-md bg-primary text-primary-foreground">
             <DatabaseIcon className="size-4" />
           </div>
-          <span className="font-semibold tracking-tight">Talkql</span>
+          <Logo />
         </div>
         <div className="flex items-center gap-1">
           <ThemeToggle />

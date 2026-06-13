@@ -1,4 +1,5 @@
-import { PROVIDER_META, providerIcon, type ProviderId } from "@/lib/ai/models";
+import { PROVIDER_META, providerIcon } from "@/lib/ai/models";
+import type { ProviderId } from "@/lib/ai/types";
 import { cn } from "@/lib/utils";
 import { Container, SectionLabel, Heading, Body } from "./shared";
 import { Reveal } from "./reveal";
