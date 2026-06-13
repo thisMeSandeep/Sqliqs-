@@ -1,7 +1,7 @@
 import type { DbKind } from "@/lib/db/types";
 import { MAX_ROWS } from "@/lib/db/guard";
 
-// The one query-language branch (ARCHITECTURE §9.3 "branch, don't fork"): SQL
+// The one query-language branch : SQL
 // engines and MongoDB share every prompt except this block, which describes how
 // to use the run_query tool and which read-only constraints apply. Everything
 // else (count-first, limits, scope guardrail, answer format) is shared.
@@ -55,10 +55,30 @@ ${schema}
 
 How to work:
 - Run as many read-only queries as you need to gather the facts — prefer aggregates; never return more than ${MAX_ROWS} rows from a single query.
-- Then write the report as **GitHub-flavored Markdown**. You decide the structure — headings, prose, bullet lists, and markdown tables — whatever fits the request. No fixed template.
-- Use markdown tables for tabular figures (they become downloadable CSV).
+- Then write the report as **GitHub-flavored Markdown**. You decide the structure — headings, prose, bullet lists, markdown tables, and charts — whatever fits the request. No fixed template.
+- Use markdown tables for detailed tabular figures (they become downloadable CSV).
 - Ground every number and statement in your query results. Never invent data.
-- Output ONLY the markdown report — no preamble like "Here is your report", no SQL, no commentary about the tools. Start directly with the report (e.g. a "# Title" heading).`;
+- Output ONLY the markdown report — no preamble like "Here is your report", no SQL, no commentary about the tools. Start directly with the report (e.g. a "# Title" heading).
+
+Charts — make it a real report, not just text:
+- When a comparison, breakdown, trend, or distribution would land better visually, embed a chart. Aim for at least one chart when the data supports it; use a few where they help, but don't force charts onto data that's better as prose.
+- Embed a chart with a fenced code block tagged \`chart\` containing a single JSON object (no comments, valid JSON):
+
+\`\`\`chart
+{
+  "chartType": "bar",
+  "title": "Headcount by department",
+  "xKey": "department",
+  "series": [{ "key": "headcount", "label": "Headcount" }],
+  "columns": ["department", "headcount"],
+  "rows": [["Engineering", 8], ["Marketing", 5], ["HR", 3], ["Finance", 4]]
+}
+\`\`\`
+
+- Fields: chartType is one of bar, line, area, pie, scatter, kpi, table. xKey is the category/label column (for kpi, the metric's label column). series lists the numeric column(s) to plot (pie, scatter, and kpi use exactly one). columns lists every column name in order; rows holds the values in that same column order.
+- xKey and every series key MUST be exact names from columns. Put the SAME numbers you got from your queries into rows — never invent them. Keep charts small: at most ${MAX_ROWS} rows, ideally far fewer.
+- Pick the type by shape: category + a number → bar; time series → line/area; parts of a whole → pie; two numeric dimensions → scatter; one headline number → kpi.
+- A chart can stand on its own; you don't need to also repeat its data as a table.`;
 }
 
 // Visualization, step 1 — gather data. Same data engine as chat; the only job
