@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/react": "^3.0.205",
     "@base-ui/react": "^1.5.0",
+    "@openrouter/ai-sdk-provider": "^2.9.1",
     "@radix-ui/react-use-controllable-state": "^1.2.3",
     "@rive-app/react-webgl2": "^4.29.1",
     "@streamdown/cjk": "^1.0.3",
@@ -24,7 +25,10 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.4.0",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
     "embla-carousel-react": "^8.6.0",
+    "idb": "^8.0.3",
     "input-otp": "^1.4.2",
     "lucide-react": "^1.18.0",
     "media-chrome": "^4.19.2",
@@ -32,6 +36,7 @@
     "nanoid": "^5.1.11",
     "next": "16.2.7",
     "next-themes": "^0.4.6",
+    "pg": "^8.21.0",
     "postgres": "^3.4.9",
     "radix-ui": "^1.5.0",
     "react": "19.2.4",
@@ -56,12 +61,15 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "ignoreScripts": [
