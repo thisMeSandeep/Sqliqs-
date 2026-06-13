@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -26,24 +25,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { DatabaseIcon, MoreVerticalIcon, PlusIcon, SettingsIcon } from "lucide-react";
-import { createProject, deleteProject, listProjects, renameProject } from "@/lib/store/projects";
+import { deleteProject, listProjects, renameProject } from "@/lib/store/projects";
 import { findModel } from "@/lib/ai/models";
 import type { Project } from "@/lib/store/db";
-import type { DbKind } from "@/lib/db/types";
+import { ConnectionWizard } from "@/components/project/connection-wizard";
 import { GlobalSettingsDialog } from "./global-settings-dialog";
-
-const DB_KINDS: DbKind[] = ["postgres", "mysql", "sqlite", "mongodb"];
 
 function modelLabel(project: Project): string {
   if (!project.model) return "Default model";
@@ -124,7 +113,7 @@ export function Dashboard() {
         </div>
       )}
 
-      <NewProjectDialog
+      <ConnectionWizard
         open={creating}
         onOpenChange={setCreating}
         onCreated={() => {
@@ -136,83 +125,6 @@ export function Dashboard() {
       <DeleteDialog project={deleting} onClose={() => setDeleting(null)} onDeleted={refresh} />
       <GlobalSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} onChanged={refresh} />
     </div>
-  );
-}
-
-// Minimal create for now — db kind + connection string + name (model inherits
-// the global default). 7d upgrades this to the full stepper with a connection
-// test and an optional per-project model/key override.
-function NewProjectDialog({
-  open,
-  onOpenChange,
-  onCreated,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onCreated: (id: string) => void;
-}) {
-  const [name, setName] = useState("");
-  const [kind, setKind] = useState<DbKind>("postgres");
-  const [connectionString, setConnectionString] = useState("");
-
-  async function create() {
-    if (!name.trim() || !connectionString.trim()) return;
-    const project = await createProject({
-      name: name.trim(),
-      db: { kind, connectionString: connectionString.trim() },
-      model: null,
-    });
-    setName("");
-    setConnectionString("");
-    onCreated(project.id);
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>New project</DialogTitle>
-          <DialogDescription>Connect a database to query in plain English.</DialogDescription>
-        </DialogHeader>
-        <div className="space-y-3">
-          <div className="space-y-1.5">
-            <Label>Database</Label>
-            <Select value={kind} onValueChange={(v) => setKind(v as DbKind)}>
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {DB_KINDS.map((k) => (
-                  <SelectItem key={k} value={k} className="capitalize">
-                    {k}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5">
-            <Label>Connection string</Label>
-            <Input
-              value={connectionString}
-              onChange={(e) => setConnectionString(e.target.value)}
-              placeholder="postgresql://user:pass@host:5432/db"
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label>Project name</Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="My database" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={create} disabled={!name.trim() || !connectionString.trim()}>
-            Create
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
   );
 }
 

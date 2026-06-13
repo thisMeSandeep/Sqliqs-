@@ -20,6 +20,8 @@ import { toPng, toSvg } from "html-to-image";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon, KeyIcon } from "lucide-react";
 import type { TableInfo } from "@/lib/db/types";
+import type { ConnectionConfig } from "@/lib/ai/types";
+import { toRequestBody } from "@/lib/ai/request";
 
 type TableNodeData = { table: TableInfo; fkColumns: Set<string> };
 
@@ -143,13 +145,17 @@ function Flow({ nodes, edges }: { nodes: Node<TableNodeData>[]; edges: Edge[] })
   );
 }
 
-export function ErDiagram() {
+export function ErDiagram({ config }: { config?: ConnectionConfig }) {
   const [tables, setTables] = useState<TableInfo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/schema", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
+    fetch("/api/schema", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(toRequestBody(config) ?? {}),
+    })
       .then((r) => r.json())
       .then((json) => {
         if (cancelled) return;
@@ -160,7 +166,7 @@ export function ErDiagram() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [config]);
 
   const { nodes, edges } = useMemo(() => buildGraph(tables ?? []), [tables]);
 

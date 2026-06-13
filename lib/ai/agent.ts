@@ -1,4 +1,3 @@
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText, InferAgentUIMessage, Output, stepCountIs, ToolLoopAgent } from "ai";
 import type { DatabaseAdapter, DbKind } from "@/lib/db/types";
 import { createRunQueryTool } from "./tools";
@@ -9,25 +8,21 @@ import {
   visualizeDataPrompt,
 } from "./prompts";
 import { chartConfigSchema, type ChartConfigSpec } from "./charts";
-
-const openrouter = createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY });
-
-function resolveModel(model?: string) {
-  return openrouter(model ?? process.env.OPENROUTER_DEFAULT_MODEL ?? "openrouter/free");
-}
+import { getLanguageModel } from "./providers";
+import type { ModelChoice } from "./types";
 
 type ChatAgentInput = {
   kind: DbKind;
   schema: string;
   adapter: DatabaseAdapter;
-  model?: string;
+  model?: ModelChoice; // omitted ⇒ free tier (handled by getLanguageModel)
 };
 
 // The shared query agent. All three surfaces build it the same way; only the
 // system prompt and the final output format differ. Here it's the Chat surface.
 export function createChatAgent({ kind, schema, adapter, model }: ChatAgentInput) {
   return new ToolLoopAgent({
-    model: resolveModel(model),
+    model: getLanguageModel(model),
     instructions: chatSystemPrompt(kind, schema),
     tools: { run_query: createRunQueryTool(adapter) },
     stopWhen: stepCountIs(10),
@@ -41,7 +36,7 @@ export type ChatUIMessage = InferAgentUIMessage<ReturnType<typeof createChatAgen
 // a full markdown document as the final text — no structured output needed.
 export function createReportAgent({ kind, schema, adapter, model }: ChatAgentInput) {
   return new ToolLoopAgent({
-    model: resolveModel(model),
+    model: getLanguageModel(model),
     instructions: reportSystemPrompt(kind, schema),
     tools: { run_query: createRunQueryTool(adapter) },
     stopWhen: stepCountIs(10),
@@ -60,7 +55,7 @@ export type ReportUIMessage = InferAgentUIMessage<ReturnType<typeof createReport
 // a wrapping adapter; this agent's text reply is ignored.
 export function createVisualizeDataAgent({ kind, schema, adapter, model }: ChatAgentInput) {
   return new ToolLoopAgent({
-    model: resolveModel(model),
+    model: getLanguageModel(model),
     instructions: visualizeDataPrompt(kind, schema),
     tools: { run_query: createRunQueryTool(adapter) },
     stopWhen: stepCountIs(6),
@@ -72,10 +67,10 @@ export async function pickChartConfig(input: {
   question: string;
   columns: string[];
   sampleRows: (string | number | null)[][];
-  model?: string;
+  model?: ModelChoice;
 }): Promise<ChartConfigSpec> {
   const { output } = await generateText({
-    model: resolveModel(input.model),
+    model: getLanguageModel(input.model),
     output: Output.object({ schema: chartConfigSchema }),
     prompt: chartConfigPrompt(input.question, input.columns, input.sampleRows),
   });

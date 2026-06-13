@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import type { ChatUIMessage } from "@/lib/ai/agent";
+import type { ConnectionConfig } from "@/lib/ai/types";
+import { toRequestBody } from "@/lib/ai/request";
 import {
   Conversation,
   ConversationContent,
@@ -34,11 +36,15 @@ const suggestions = [
   "Which projects are still active?",
 ];
 
-export function Chat() {
+// config is omitted in the playground (server falls back to the sample DB +
+// free model) and provided by a project (its connection + model travel along).
+export function Chat({ config }: { config?: ConnectionConfig }) {
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status } = useChat<ChatUIMessage>({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  });
+  const transport = useMemo(
+    () => new DefaultChatTransport<ChatUIMessage>({ api: "/api/chat", body: toRequestBody(config) }),
+    [config]
+  );
+  const { messages, sendMessage, status } = useChat<ChatUIMessage>({ transport });
 
   function submit(text: string) {
     const trimmed = text.trim();

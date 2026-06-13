@@ -4,6 +4,8 @@ import { useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import type { ReportUIMessage } from "@/lib/ai/agent";
+import type { ConnectionConfig } from "@/lib/ai/types";
+import { toRequestBody } from "@/lib/ai/request";
 import {
   PromptInput,
   PromptInputBody,
@@ -28,12 +30,14 @@ const suggestions = [
   "An overview of headcount and salaries across cities",
 ];
 
-export function Reports() {
+export function Reports({ config }: { config?: ConnectionConfig }) {
   const [input, setInput] = useState("");
   const docRef = useRef<HTMLDivElement>(null);
-  const { messages, sendMessage, status } = useChat<ReportUIMessage>({
-    transport: new DefaultChatTransport({ api: "/api/report" }),
-  });
+  const transport = useMemo(
+    () => new DefaultChatTransport<ReportUIMessage>({ api: "/api/report", body: toRequestBody(config) }),
+    [config]
+  );
+  const { messages, sendMessage, status } = useChat<ReportUIMessage>({ transport });
 
   // The report is the latest assistant message's text (streamed).
   const markdown = useMemo(() => {

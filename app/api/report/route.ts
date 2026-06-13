@@ -1,6 +1,7 @@
 import { createAgentUIStreamResponse, type UIMessage } from "ai";
 import { getAdapter } from "@/lib/db";
 import type { DbKind } from "@/lib/db/types";
+import type { ModelChoice } from "@/lib/ai/types";
 import { createReportAgent } from "@/lib/ai/agent";
 
 // NL → SQL → markdown report (streamed). Same per-request connection model as
@@ -9,7 +10,7 @@ type ReportRequest = {
   messages: UIMessage[];
   kind?: DbKind;
   connectionString?: string;
-  model?: string;
+  model?: ModelChoice;
 };
 
 export async function POST(req: Request) {

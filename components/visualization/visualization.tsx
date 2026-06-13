@@ -18,6 +18,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { BarChart3Icon, DownloadIcon } from "lucide-react";
 import { CHART_TYPE_LABELS, CHART_TYPES, type ChartSpec, type ChartType } from "@/lib/ai/charts";
+import type { ConnectionConfig } from "@/lib/ai/types";
+import { toRequestBody } from "@/lib/ai/request";
 import { exportChartPng, exportChartSvg } from "@/lib/export/chart";
 import { ChartView } from "./chart-view";
 
@@ -29,7 +31,7 @@ const suggestions = [
 
 type Status = "idle" | "loading" | "error";
 
-export function Visualization() {
+export function Visualization({ config }: { config?: ConnectionConfig }) {
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +48,7 @@ export function Visualization() {
       const res = await fetch("/api/visualize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: trimmed }),
+        body: JSON.stringify({ prompt: trimmed, ...toRequestBody(config) }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Failed to generate chart");

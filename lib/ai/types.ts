@@ -15,3 +15,11 @@ export type ModelChoice = {
   model: string; // provider-native model id
   apiKey?: string; // omitted ⇒ free tier (our OpenRouter env key; provider must be "openrouter")
 };
+
+// What a surface sends per request so the route knows which database to query
+// and which model to use. Omitted entirely by the playground (server defaults).
+export type ConnectionConfig = {
+  kind: import("@/lib/db/types").DbKind;
+  connectionString: string;
+  model: ModelChoice;
+};

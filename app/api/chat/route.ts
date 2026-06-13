@@ -1,6 +1,7 @@
 import { createAgentUIStreamResponse, type UIMessage } from "ai";
 import { getAdapter } from "@/lib/db";
 import type { DbKind } from "@/lib/db/types";
+import type { ModelChoice } from "@/lib/ai/types";
 import { createChatAgent } from "@/lib/ai/agent";
 
 // NL → SQL → table + narrative. The connection travels per request: the
@@ -11,7 +12,7 @@ type ChatRequest = {
   messages: UIMessage[];
   kind?: DbKind;
   connectionString?: string;
-  model?: string;
+  model?: ModelChoice;
 };
 
 export async function POST(req: Request) {

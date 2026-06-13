@@ -1,5 +1,6 @@
 import { getAdapter } from "@/lib/db";
 import type { DatabaseAdapter, DbKind } from "@/lib/db/types";
+import type { ModelChoice } from "@/lib/ai/types";
 import { createVisualizeDataAgent, pickChartConfig } from "@/lib/ai/agent";
 import type { ChartSpec } from "@/lib/ai/charts";
 
@@ -10,7 +11,7 @@ type VisualizeRequest = {
   prompt: string;
   kind?: DbKind;
   connectionString?: string;
-  model?: string;
+  model?: ModelChoice;
 };
 
 export async function POST(req: Request) {
