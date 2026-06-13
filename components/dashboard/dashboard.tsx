@@ -32,6 +32,7 @@ import { deleteProject, listProjects, renameProject } from "@/lib/store/projects
 import { findModel } from "@/lib/ai/models";
 import type { Project } from "@/lib/store/db";
 import { ConnectionWizard } from "@/components/project/connection-wizard";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { GlobalSettingsDialog } from "./global-settings-dialog";
 
 function modelLabel(project: Project): string {
@@ -58,6 +59,7 @@ export function Dashboard() {
       <div className="mb-6 flex items-center justify-between">
         <h1 className="font-semibold text-2xl">Your projects</h1>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button variant="outline" size="sm" onClick={() => setSettingsOpen(true)}>
             <SettingsIcon className="size-4" /> Settings
           </Button>

@@ -10,6 +10,7 @@ import { getProject } from "@/lib/store/projects";
 import { resolveModel } from "@/lib/store/settings";
 import type { Project } from "@/lib/store/db";
 import type { ConnectionConfig } from "@/lib/ai/types";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Workspace } from "./workspace";
 import { ProjectMenu } from "./project-menu";
 
@@ -76,6 +77,7 @@ export function ProjectWorkspace({ id }: { id: string }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <ProjectMenu
             project={state.project}
             onChanged={load}
