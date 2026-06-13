@@ -53,7 +53,7 @@ export function Body({ children, className }: { children: ReactNode; className?:
   return <p className={cn("text-[#888888] leading-relaxed", className)}>{children}</p>;
 }
 
-// CTA class strings — used on Links and Clerk button wrappers alike.
+// CTA class strings — shared by the landing-page Links.
 export const primaryCta =
   "inline-flex items-center justify-center gap-2 rounded-md bg-[#52E8A2] px-5 py-2.5 font-medium text-[#0A0A0A] text-sm transition-colors hover:bg-[#6BEEB2]";
 

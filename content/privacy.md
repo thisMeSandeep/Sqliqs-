@@ -26,15 +26,14 @@ To answer a question, your browser sends the connection string, your API key, an
 
 We do **not** persist, cache, or log these credentials or your data after the request completes. Everything travels over TLS (HTTPS) end to end.
 
-## Accounts and authentication
+## No accounts
 
-We use [Clerk](https://clerk.com) to handle sign-up and sign-in. Clerk stores the account information needed to authenticate you (such as your email address) under its own privacy policy. We do not keep our own separate copy of your profile in an application database.
+Sqliqs has no sign-up and no login. There are no user accounts, and we never collect your name, email, or any profile information. You just open the app and connect a database — everything is tied to your browser, not to an identity we hold.
 
 ## Third parties your data reaches
 
 - **Your LLM provider** (e.g. OpenRouter, Anthropic, OpenAI, Google, xAI, DeepSeek) — receives your prompt and schema context to generate a response, billed to your own key.
 - **Your database** — receives the read-only queries Sqliqs generates.
-- **Clerk** — handles authentication.
 
 Each operates under its own terms and privacy policy. Sqliqs is not responsible for how these third parties process data once it reaches them.
 
@@ -44,7 +43,7 @@ The public Playground runs against a hosted sample database with a shared free m
 
 ## Cookies
 
-We use only the cookies required for authentication and session management (set by Clerk). We do not use advertising or third-party tracking cookies.
+Sqliqs doesn't use tracking or advertising cookies, and since there are no accounts, no authentication or session cookies either. Your data is kept in your browser's local storage, not in cookies.
 
 ## Changes to this policy
 

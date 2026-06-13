@@ -44,6 +44,6 @@ If answers feel shallow or a generated query looks off, switching to a stronger 
 ## Ready to start?
 
 - [Open the Playground](/playground) — no login, no key required.
-- [Connect your database](/sign-up) — bring your own key and go.
+- [Connect your database](/dashboard) — bring your own key and go.
 
 See the [Guide](/guide) for tips on getting the best results, or the [Privacy Policy](/privacy) for how your data is handled.

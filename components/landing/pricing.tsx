@@ -36,7 +36,7 @@ export function Pricing() {
                 </li>
               ))}
             </ul>
-            <Link href="/sign-up" className={`${primaryCta} mt-8 w-full`}>
+            <Link href="/dashboard" className={`${primaryCta} mt-8 w-full`}>
               Get Started
             </Link>
           </div>

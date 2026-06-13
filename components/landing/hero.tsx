@@ -46,7 +46,7 @@ export function Hero() {
                 Try the Playground
                 <ArrowRightIcon className="size-4" />
               </Link>
-              <Link href="/sign-up" className={ghostCta}>
+              <Link href="/dashboard" className={ghostCta}>
                 Connect your database
               </Link>
             </div>

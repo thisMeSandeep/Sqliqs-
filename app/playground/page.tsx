@@ -1,4 +1,4 @@
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { Workspace } from "@/components/project/workspace";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
@@ -18,22 +18,9 @@ export default function PlaygroundPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Show when="signed-out">
-            <SignInButton>
-              <Button variant="ghost" size="sm">
-                Sign in
-              </Button>
-            </SignInButton>
-            <SignUpButton>
-              <Button size="sm">Connect your database</Button>
-            </SignUpButton>
-          </Show>
-          <Show when="signed-in">
-            <Button asChild variant="outline" size="sm">
-              <a href="/dashboard">Dashboard</a>
-            </Button>
-            <UserButton />
-          </Show>
+          <Button asChild size="sm">
+            <Link href="/dashboard">Connect your database</Link>
+          </Button>
         </div>
       </header>
       <div className="min-h-0 flex-1">

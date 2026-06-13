@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
 import {
   Dialog,
   DialogContent,
@@ -89,9 +88,6 @@ export function Dashboard() {
               <SettingsIcon className="size-4" />
             </Link>
           </Button>
-          <div className="ml-1">
-            <UserButton />
-          </div>
         </div>
       </header>
 

@@ -5,7 +5,7 @@ Sqliqs lets you ask questions about your database in plain English — no SQL re
 You have two ways in:
 
 - **Playground** — try Sqliqs instantly against a hosted sample database. No login, no key, no setup. Great for seeing how it works.
-- **Your own database** — sign up, create a project, and paste a connection string for PostgreSQL, MySQL, SQLite, or MongoDB. Your connection details stay in your browser.
+- **Your own database** — open the dashboard, create a project, and paste a connection string for PostgreSQL, MySQL, SQLite, or MongoDB. No sign-up required, and your connection details stay in your browser.
 
 Once connected, open a project and start asking questions.
 

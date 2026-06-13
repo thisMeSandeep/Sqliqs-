@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getProject } from "@/lib/store/projects";
@@ -83,7 +82,6 @@ export function ProjectWorkspace({ id }: { id: string }) {
             onChanged={load}
             onDeleted={() => router.push("/dashboard")}
           />
-          <UserButton />
         </div>
       </header>
       <div className="min-h-0 flex-1">

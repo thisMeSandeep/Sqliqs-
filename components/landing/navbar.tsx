@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { Show } from "@clerk/nextjs";
 import { Logo } from "@/components/brand/logo";
 import { Container } from "./shared";
 
 // Minimal sticky nav. Solid background (no blur, per the brief), a single 1px
-// bottom border dividing it from the hero. CTA swaps with auth state.
+// bottom border dividing it from the hero.
 export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-[#222222] border-b bg-[#0A0A0A]">
@@ -34,22 +33,12 @@ export function Navbar() {
           </Link>
         </nav>
 
-        <Show when="signed-out">
-          <Link
-            href="/sign-up"
-            className="rounded-md bg-[#52E8A2] px-3.5 py-1.5 font-medium text-[#0A0A0A] text-sm transition-colors hover:bg-[#6BEEB2]"
-          >
-            Get Started
-          </Link>
-        </Show>
-        <Show when="signed-in">
-          <Link
-            href="/dashboard"
-            className="rounded-md bg-[#52E8A2] px-3.5 py-1.5 font-medium text-[#0A0A0A] text-sm transition-colors hover:bg-[#6BEEB2]"
-          >
-            Dashboard
-          </Link>
-        </Show>
+        <Link
+          href="/dashboard"
+          className="rounded-md bg-[#52E8A2] px-3.5 py-1.5 font-medium text-[#0A0A0A] text-sm transition-colors hover:bg-[#6BEEB2]"
+        >
+          Open Dashboard
+        </Link>
       </Container>
     </header>
   );

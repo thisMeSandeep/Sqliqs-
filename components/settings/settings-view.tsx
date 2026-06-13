@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
 import { ArrowLeftIcon, CheckIcon } from "lucide-react";
 import {
   AlertDialog,
@@ -59,9 +58,6 @@ export function SettingsView() {
         </div>
         <div className="flex items-center gap-1">
           <ThemeToggle />
-          <div className="ml-1">
-            <UserButton />
-          </div>
         </div>
       </header>
 
