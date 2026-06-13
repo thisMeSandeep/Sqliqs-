@@ -10,6 +10,7 @@ import {
   ReactFlow,
   ReactFlowProvider,
   getNodesBounds,
+  getViewportForBounds,
   useReactFlow,
   type Edge,
   type Node,
@@ -89,6 +90,10 @@ function downloadDataUrl(dataUrl: string, filename: string) {
 function Flow({ nodes, edges }: { nodes: Node<TableNodeData>[]; edges: Edge[] }) {
   const { getNodes } = useReactFlow();
 
+  // React Flow's canonical download-image approach: pick a fixed output frame,
+  // then let getViewportForBounds compute the pan/zoom that fits the whole graph
+  // into that frame. We capture the .react-flow__viewport element at that exact
+  // size + transform, so nothing is clipped regardless of node coordinates.
   const exportAs = useCallback(
     async (format: "png" | "svg") => {
       const viewport = document.querySelector<HTMLElement>(".react-flow__viewport");
@@ -96,20 +101,19 @@ function Flow({ nodes, edges }: { nodes: Node<TableNodeData>[]; edges: Edge[] })
       if (!viewport || measured.length === 0) return;
 
       const bounds = getNodesBounds(measured);
-      const pad = 48;
-      const width = Math.round(bounds.width + pad * 2);
-      const height = Math.round(bounds.height + pad * 2);
+      const pad = 0.1; // 10% padding around the graph
+      const imageWidth = Math.max(Math.round(bounds.width * 1.2), 1024);
+      const imageHeight = Math.max(Math.round(bounds.height * 1.2), 768);
+      const t = getViewportForBounds(bounds, imageWidth, imageHeight, 0.2, 2, pad);
 
-      // Translate so the top-left of the graph lands at (pad, pad) at 1:1 zoom —
-      // the whole diagram fits exactly in the captured frame.
       const options = {
         backgroundColor: "white",
-        width,
-        height,
+        width: imageWidth,
+        height: imageHeight,
         style: {
-          width: `${width}px`,
-          height: `${height}px`,
-          transform: `translate(${-bounds.x + pad}px, ${-bounds.y + pad}px) scale(1)`,
+          width: `${imageWidth}px`,
+          height: `${imageHeight}px`,
+          transform: `translate(${t.x}px, ${t.y}px) scale(${t.zoom})`,
         },
       };
 
