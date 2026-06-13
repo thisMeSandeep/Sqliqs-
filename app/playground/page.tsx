@@ -1,10 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Workspace } from "@/components/project/workspace";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 
+export const metadata: Metadata = {
+  title: "Playground",
+  description:
+    "Try Sqliqs instantly against a hosted sample database — no login, no key, no setup. Ask questions in plain English.",
+  alternates: { canonical: "/playground" },
+};
+
 // Public, no-login sandbox: the full product against our hosted sample DB with
-// our default OpenRouter key. The one sanctioned exception to "login required".
+// our default OpenRouter key.
 export default function PlaygroundPage() {
   return (
     <main className="flex h-dvh flex-col">

@@ -39,6 +39,9 @@ export function ProjectWorkspace({ id }: { id: string }) {
   }, [id]);
 
   useEffect(() => {
+    // Async mount-fetch: load() only setState's after awaiting IndexedDB, so this
+    // isn't the synchronous cascading-render the rule guards against.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);
 

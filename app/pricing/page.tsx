@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { MarkdownPage } from "@/components/content/markdown-page";
 
 export const metadata: Metadata = {
-  title: "Pricing — Sqliqs",
+  title: "Pricing",
   description: "Sqliqs is free — you bring your own model key and pay your provider directly.",
 };
 

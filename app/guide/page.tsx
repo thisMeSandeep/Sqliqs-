@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { MarkdownPage } from "@/components/content/markdown-page";
 
 export const metadata: Metadata = {
-  title: "Guide — Sqliqs",
+  title: "Guide",
   description: "How to use Sqliqs effectively, keep your data safe, and what to know about its limits.",
 };
 
