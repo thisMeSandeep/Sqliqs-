@@ -24,8 +24,7 @@ export const MODEL_CATALOG: CatalogEntry[] = [
   { provider: "xai", model: "grok-2", label: "Grok 2" },
 ];
 
-// Display metadata per provider. Icons live in app/assets/providers/<id>.svg;
-// the picker maps them (assets aren't URL-served, so they're imported there).
+// Display metadata per provider. Icons are served from public/providers/.
 export const PROVIDER_META: Record<ProviderId, { label: string }> = {
   openrouter: { label: "OpenRouter" },
   anthropic: { label: "Anthropic" },
@@ -34,6 +33,20 @@ export const PROVIDER_META: Record<ProviderId, { label: string }> = {
   xai: { label: "xAI" },
   deepseek: { label: "DeepSeek" },
 };
+
+// Public URL of a provider's icon. (xAI's file is named grok.svg.)
+const ICON_FILE: Record<ProviderId, string> = {
+  openrouter: "openrouter",
+  anthropic: "anthropic",
+  openai: "openai",
+  google: "google",
+  xai: "grok",
+  deepseek: "deepseek",
+};
+
+export function providerIcon(provider: ProviderId): string {
+  return `/providers/${ICON_FILE[provider]}.svg`;
+}
 
 export function findModel(provider: ProviderId, model: string): CatalogEntry | undefined {
   return MODEL_CATALOG.find((m) => m.provider === provider && m.model === model);

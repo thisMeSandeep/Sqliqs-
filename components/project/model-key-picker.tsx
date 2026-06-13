@@ -1,6 +1,5 @@
 "use client";
 
-import Image, { type StaticImageData } from "next/image";
 import {
   Select,
   SelectContent,
@@ -10,24 +9,8 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { findModel, MODEL_CATALOG, PROVIDER_META } from "@/lib/ai/models";
+import { findModel, MODEL_CATALOG, PROVIDER_META, providerIcon } from "@/lib/ai/models";
 import type { ModelChoice, ProviderId } from "@/lib/ai/types";
-
-import openrouterIcon from "@/app/assets/providers/openrouter.svg";
-import anthropicIcon from "@/app/assets/providers/anthropic.svg";
-import openaiIcon from "@/app/assets/providers/openai.svg";
-import googleIcon from "@/app/assets/providers/google.svg";
-import grokIcon from "@/app/assets/providers/grok.svg";
-import deepseekIcon from "@/app/assets/providers/deepseek.svg";
-
-const PROVIDER_ICON: Record<ProviderId, StaticImageData> = {
-  openrouter: openrouterIcon,
-  anthropic: anthropicIcon,
-  openai: openaiIcon,
-  google: googleIcon,
-  xai: grokIcon,
-  deepseek: deepseekIcon,
-};
 
 // Reused for the global default and the per-project override. Picks a model
 // from the curated catalog; non-free models reveal an API-key field (BYOK).
@@ -64,7 +47,8 @@ export function ModelKeyPicker({
                 value={`${entry.provider}::${entry.model}`}
               >
                 <span className="flex items-center gap-2">
-                  <Image src={PROVIDER_ICON[entry.provider]} alt="" width={16} height={16} />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={providerIcon(entry.provider)} alt="" width={16} height={16} />
                   {entry.label}
                   {entry.free && <span className="text-muted-foreground text-xs">· free</span>}
                 </span>
