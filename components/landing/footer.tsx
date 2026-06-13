@@ -4,11 +4,11 @@ import { Container } from "./shared";
 
 const PRODUCT = [
   { label: "Playground", href: "/playground" },
-  { label: "Features", href: "#features" },
-  { label: "Changelog", href: "#" },
+  { label: "Guide", href: "/guide" },
+  { label: "Pricing", href: "/pricing" },
 ];
 const LEGAL = [
-  { label: "Privacy", href: "#" },
+  { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "#" },
 ];
 

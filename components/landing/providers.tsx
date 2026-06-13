@@ -4,11 +4,7 @@ import { cn } from "@/lib/utils";
 import { Container, SectionLabel, Heading, Body } from "./shared";
 import { Reveal } from "./reveal";
 
-// Mirrors the app's BYOK picker. Order is curated; labels and the dark-invert
-// treatment come from PROVIDER_META so this never drifts from what the product
-// supports. The "Free" badge is landing-specific: it marks only the provider we
-// actually offer a built-in free model through (OpenRouter) — NOT every provider
-// that happens to give out free API keys (PROVIDER_META.freeTier means that).
+
 const ORDER: ProviderId[] = ["openrouter", "anthropic", "openai", "google", "xai", "deepseek"];
 const FREE_ON_LANDING = new Set<ProviderId>(["openrouter"]);
 
@@ -17,7 +13,7 @@ export function Providers() {
     <section className="border-[#222222] border-b">
       <Container className="py-24 text-center lg:py-28">
         <Reveal>
-          <SectionLabel>Bring your own model</SectionLabel>
+          <SectionLabel>Bring your own key</SectionLabel>
           <Heading className="mx-auto mt-4 max-w-2xl">Use any major AI provider.</Heading>
           <Body className="mx-auto mt-5 max-w-xl">
             Plug in your own key from any supported provider — your usage is billed by them, not us.

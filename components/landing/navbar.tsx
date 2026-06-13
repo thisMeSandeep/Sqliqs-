@@ -21,13 +21,13 @@ export function Navbar() {
             Playground
           </Link>
           <Link
-            href="#features"
+            href="/guide"
             className="text-[#888888] text-sm transition-colors hover:text-[#E5E5E5]"
           >
-            Features
+            Guide
           </Link>
           <Link
-            href="#pricing"
+            href="/pricing"
             className="text-[#888888] text-sm transition-colors hover:text-[#E5E5E5]"
           >
             Pricing

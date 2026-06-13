@@ -40,6 +40,11 @@ export function Pricing() {
               Get Started
             </Link>
           </div>
+          <p className="mt-6 text-[#888888] text-sm">
+            <Link href="/pricing" className="text-[#52E8A2] transition-colors hover:text-[#6BEEB2]">
+              See how pricing works →
+            </Link>
+          </p>
         </Reveal>
       </Container>
     </section>
