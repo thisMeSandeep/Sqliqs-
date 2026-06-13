@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import type { ChatUIMessage } from "@/lib/ai/agent";
 import type { ConnectionConfig } from "@/lib/ai/types";
 import { toRequestBody } from "@/lib/ai/request";
+import { saveSession } from "@/lib/store/history";
+import type { Session } from "@/lib/store/db";
 import {
   Conversation,
   ConversationContent,
@@ -36,15 +38,45 @@ const suggestions = [
   "Which projects are still active?",
 ];
 
+function firstUserText(messages: ChatUIMessage[]): string | undefined {
+  const first = messages.find((m) => m.role === "user");
+  const text = first?.parts.find((p) => p.type === "text");
+  return text && "text" in text ? text.text : undefined;
+}
+
 // config is omitted in the playground (server falls back to the sample DB +
-// free model) and provided by a project (its connection + model travel along).
-export function Chat({ config }: { config?: ConnectionConfig }) {
+// free model) and provided by a project. When a `session` is passed (project
+// mode) the thread is persisted to IndexedDB; remount via key on session switch.
+export function Chat({
+  config,
+  session,
+  onPersisted,
+}: {
+  config?: ConnectionConfig;
+  session?: Session;
+  onPersisted?: () => void;
+}) {
   const [input, setInput] = useState("");
   const transport = useMemo(
     () => new DefaultChatTransport<ChatUIMessage>({ api: "/api/chat", body: toRequestBody(config) }),
     [config]
   );
-  const { messages, sendMessage, status } = useChat<ChatUIMessage>({ transport });
+  const { messages, sendMessage, status } = useChat<ChatUIMessage>({
+    id: session?.id,
+    messages: (session?.messages as ChatUIMessage[]) ?? [],
+    transport,
+  });
+
+  // Persist the thread after each completed turn (project mode only).
+  useEffect(() => {
+    if (!session || status !== "ready" || messages.length === 0) return;
+    saveSession({
+      ...session,
+      title: firstUserText(messages) ?? session.title,
+      messages,
+    }).then(() => onPersisted?.());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, messages]);
 
   function submit(text: string) {
     const trimmed = text.trim();

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { resolveModel } from "@/lib/store/settings";
 import type { Project } from "@/lib/store/db";
 import type { ConnectionConfig } from "@/lib/ai/types";
 import { Workspace } from "./workspace";
+import { ProjectMenu } from "./project-menu";
 
 type State =
   | { status: "loading" }
@@ -19,29 +21,26 @@ type State =
 // Loads the project from IndexedDB (client-side), resolves its effective model
 // (own override or the global default), and feeds the surfaces via Workspace.
 export function ProjectWorkspace({ id }: { id: string }) {
+  const router = useRouter();
   const [state, setState] = useState<State>({ status: "loading" });
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const project = await getProject(id);
-      if (cancelled) return;
-      if (!project) {
-        setState({ status: "notfound" });
-        return;
-      }
-      const model = await resolveModel(project);
-      if (cancelled) return;
-      setState({
-        status: "ready",
-        project,
-        config: { kind: project.db.kind, connectionString: project.db.connectionString, model },
-      });
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const load = useCallback(async () => {
+    const project = await getProject(id);
+    if (!project) {
+      setState({ status: "notfound" });
+      return;
+    }
+    const model = await resolveModel(project);
+    setState({
+      status: "ready",
+      project,
+      config: { kind: project.db.kind, connectionString: project.db.connectionString, model },
+    });
   }, [id]);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   if (state.status === "loading") {
     return (
@@ -76,10 +75,17 @@ export function ProjectWorkspace({ id }: { id: string }) {
             <p className="text-muted-foreground text-xs capitalize">{state.project.db.kind}</p>
           </div>
         </div>
-        <UserButton />
+        <div className="flex items-center gap-2">
+          <ProjectMenu
+            project={state.project}
+            onChanged={load}
+            onDeleted={() => router.push("/dashboard")}
+          />
+          <UserButton />
+        </div>
       </header>
       <div className="min-h-0 flex-1">
-        <Workspace config={state.config} />
+        <Workspace config={state.config} projectId={state.project.id} />
       </div>
     </main>
   );
