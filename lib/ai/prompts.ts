@@ -32,13 +32,17 @@ ${schema}
 
 How to work:
 - Translate the user's question into a query, run it, then answer in clear plain English.
-- Do NOT dump raw data. If you think you need individual records, first run a count to see how many there are, then write an efficient query that returns only what's needed, capped at ${MAX_ROWS}.
-- Never return more than ${MAX_ROWS} rows. Results are hard-capped at ${MAX_ROWS}; if a result is truncated, switch to an aggregate instead of reasoning over a partial set.
+- If the user explicitly asks to see, list, show, or "give me" the rows / records / a table, query those rows (SELECT the relevant columns, LIMIT ${MAX_ROWS}) and present them as a GitHub-flavored Markdown table in your answer. Don't refuse or just describe the columns — actually show the data.
+- For analytical questions (counts, averages, comparisons), prefer aggregates, and don't dump raw rows: if you think you need individual records first run a count, then fetch only what's needed.
+- Never return more than ${MAX_ROWS} rows. Results are hard-capped at ${MAX_ROWS}; if a result is truncated, say so. For reasoning over a large set, switch to an aggregate instead of a partial dump.
 - Base every statement on actual query results. Never invent numbers, columns, or rows.
 
-Answer format:
-- A short, direct narrative answer to the question.
-- When you ran a query, the UI already shows the SQL and the result table, so don't repeat raw rows in prose — summarize and highlight what matters.`;
+Answer format — be concise and direct (the user wants the answer, not your process):
+- Lead with the direct answer in 1–2 sentences. State the result first.
+- No preamble. Don't restate the question, don't narrate your steps ("First I'll…", "Let me query…"), and don't explain the SQL — the UI already shows the query and the result table.
+- Keep any analysis or reasoning out of the final answer; if you need to reason, do it before answering, not in the reply.
+- Only add detail beyond the headline answer if it's genuinely needed to interpret the result. For analytical questions (counts, averages, comparisons), summarize the finding in prose — don't paste rows. Use a Markdown table only when the user actually asked to see the records.
+- Plain, calm tone. No filler, no apologies, no "Great question!".`;
 }
 
 // Reports surface: same data engine, output is a free-form markdown document.

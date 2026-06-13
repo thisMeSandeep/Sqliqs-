@@ -23,10 +23,12 @@ import { toRequestBody } from "@/lib/ai/request";
 import { exportChartPng, exportChartSvg } from "@/lib/export/chart";
 import { ChartView } from "./chart-view";
 
+// Schema-agnostic prompts — the model reads the live schema, so these fit any
+// connected database rather than the sample data.
 const suggestions = [
-  "Headcount by department as a bar chart",
-  "Average salary by department",
-  "Total project budget per department as a pie chart",
+  "A bar chart of record counts by category",
+  "The distribution of a key column as a pie chart",
+  "A trend over time if the data has dates",
 ];
 
 type Status = "idle" | "loading" | "error";

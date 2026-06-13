@@ -135,9 +135,9 @@ export function Dashboard() {
       <ConnectionWizard
         open={creating}
         onOpenChange={setCreating}
-        onCreated={() => {
+        onCreated={(id) => {
           setCreating(false);
-          refresh();
+          router.push(`/projects/${id}`);
         }}
       />
       <RenameDialog project={renaming} onClose={() => setRenaming(null)} onRenamed={refresh} />
@@ -283,38 +283,57 @@ function RenameDialog({
   onClose: () => void;
   onRenamed: () => void;
 }) {
-  const [name, setName] = useState("");
-  useEffect(() => setName(project?.name ?? ""), [project]);
-
-  async function save() {
-    if (!project || !name.trim()) return;
-    await renameProject(project.id, name.trim());
-    onRenamed();
-    onClose();
-  }
-
   return (
     <Dialog open={project !== null} onOpenChange={(o) => !o && onClose()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Rename project</DialogTitle>
         </DialogHeader>
-        <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && save()}
-          autoFocus
-        />
-        <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={save} disabled={!name.trim()}>
-            Save
-          </Button>
-        </DialogFooter>
+        {/* Keyed by id so the form remounts with fresh state per project —
+            no reset effect needed. */}
+        {project && (
+          <RenameForm key={project.id} project={project} onClose={onClose} onRenamed={onRenamed} />
+        )}
       </DialogContent>
     </Dialog>
+  );
+}
+
+function RenameForm({
+  project,
+  onClose,
+  onRenamed,
+}: {
+  project: Project;
+  onClose: () => void;
+  onRenamed: () => void;
+}) {
+  const [name, setName] = useState(project.name);
+
+  async function save() {
+    if (!name.trim()) return;
+    await renameProject(project.id, name.trim());
+    onRenamed();
+    onClose();
+  }
+
+  return (
+    <>
+      <Input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && save()}
+        autoFocus
+      />
+      <DialogFooter>
+        <Button variant="ghost" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button onClick={save} disabled={!name.trim()}>
+          Save
+        </Button>
+      </DialogFooter>
+    </>
   );
 }
 

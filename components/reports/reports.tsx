@@ -24,10 +24,12 @@ import {
 } from "@/lib/export/report";
 import { ReportDocument } from "./report-document";
 
+// Schema-agnostic prompts — the model reads the live schema, so these fit any
+// connected database rather than the sample data.
 const suggestions = [
-  "A hiring and compensation overview by department",
-  "A summary of project budgets and staffing",
-  "An overview of headcount and salaries across cities",
+  "Write a summary report of this database",
+  "Report the key trends and totals in the data",
+  "Break down the main categories with figures",
 ];
 
 export function Reports({ config }: { config?: ConnectionConfig }) {
