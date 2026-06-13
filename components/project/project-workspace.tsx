@@ -63,19 +63,19 @@ export function ProjectWorkspace({ id }: { id: string }) {
 
   return (
     <main className="flex h-dvh flex-col">
-      <header className="flex items-center justify-between border-b px-4 py-3">
-        <div className="flex items-center gap-3">
-          <Button asChild variant="ghost" size="icon-sm">
+      <header className="flex items-center justify-between gap-2 border-b px-4 py-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <Button asChild variant="ghost" size="icon-sm" className="shrink-0">
             <Link href="/dashboard" aria-label="Back to dashboard">
               <ArrowLeftIcon className="size-4" />
             </Link>
           </Button>
-          <div>
-            <h1 className="font-semibold">{state.project.name}</h1>
+          <div className="min-w-0">
+            <h1 className="truncate font-semibold">{state.project.name}</h1>
             <p className="text-muted-foreground text-xs capitalize">{state.project.db.kind}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <ThemeToggle />
           <ProjectMenu
             project={state.project}

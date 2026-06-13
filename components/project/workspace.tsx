@@ -21,19 +21,25 @@ export function Workspace({
 }) {
   return (
     <Tabs defaultValue="chat" className="flex h-full flex-col gap-0">
-      <div className="border-b px-4 py-2">
+      {/* Icon-only on small screens so the four tabs never overflow; labels
+          appear from sm up. overflow-x-auto is a safety net for very narrow widths. */}
+      <div className="overflow-x-auto border-b px-4 py-2">
         <TabsList>
-          <TabsTrigger value="chat">
-            <MessageSquareIcon className="size-4" /> Chat
+          <TabsTrigger value="chat" aria-label="Chat">
+            <MessageSquareIcon className="size-4" />
+            <span className="hidden sm:inline">Chat</span>
           </TabsTrigger>
-          <TabsTrigger value="visualization">
-            <BarChart3Icon className="size-4" /> Visualization
+          <TabsTrigger value="visualization" aria-label="Visualization">
+            <BarChart3Icon className="size-4" />
+            <span className="hidden sm:inline">Visualization</span>
           </TabsTrigger>
-          <TabsTrigger value="reports">
-            <FileTextIcon className="size-4" /> Reports
+          <TabsTrigger value="reports" aria-label="Reports">
+            <FileTextIcon className="size-4" />
+            <span className="hidden sm:inline">Reports</span>
           </TabsTrigger>
-          <TabsTrigger value="er">
-            <NetworkIcon className="size-4" /> ER diagram
+          <TabsTrigger value="er" aria-label="ER diagram">
+            <NetworkIcon className="size-4" />
+            <span className="hidden sm:inline">ER diagram</span>
           </TabsTrigger>
         </TabsList>
       </div>
