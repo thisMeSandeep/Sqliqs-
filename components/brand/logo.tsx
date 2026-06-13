@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-// The Talkql wordmark — a mint→cyan gradient clipped to the text. Reads on both
+// The Sqliqs wordmark — a mint→cyan gradient clipped to the text. Reads on both
 // light and dark backgrounds (both stops are mid-tone), so it's the single brand
 // mark used everywhere: landing, dashboard, playground, settings.
 //
@@ -15,7 +15,7 @@ export function Logo({ className }: { className?: string }) {
         className
       )}
     >
-      Talkql
+      Sqliqs
     </span>
   );
 }

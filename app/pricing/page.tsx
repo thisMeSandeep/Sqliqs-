@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { MarkdownPage } from "@/components/content/markdown-page";
 
 export const metadata: Metadata = {
-  title: "Pricing — Talkql",
-  description: "Talkql is free — you bring your own model key and pay your provider directly.",
+  title: "Pricing — Sqliqs",
+  description: "Sqliqs is free — you bring your own model key and pay your provider directly.",
 };
 
 export default async function PricingPage() {

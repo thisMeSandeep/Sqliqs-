@@ -69,26 +69,26 @@ async function seed() {
   // department_id matches the serial ids above: Engineering=1, Marketing=2, HR=3, Finance=4
   await sql`
     INSERT INTO employees (name, email, department_id, salary, hire_date, city) VALUES
-    ('Alice Johnson',  'alice.johnson@talkql.dev',  1,  95000, '2019-03-15', 'San Francisco'),
-    ('Bob Smith',      'bob.smith@talkql.dev',      1,  88000, '2020-07-01', 'Austin'),
-    ('Carol White',    'carol.white@talkql.dev',    2,  72000, '2018-11-20', 'New York'),
-    ('David Lee',      'david.lee@talkql.dev',      1, 102000, '2017-05-10', 'San Francisco'),
-    ('Eva Martinez',   'eva.martinez@talkql.dev',   3,  65000, '2021-01-12', 'Chicago'),
-    ('Frank Chen',     'frank.chen@talkql.dev',     2,  78000, '2019-08-25', 'New York'),
-    ('Grace Kim',      'grace.kim@talkql.dev',      1,  97000, '2020-02-14', 'Austin'),
-    ('Henry Brown',    'henry.brown@talkql.dev',    4,  85000, '2018-06-30', 'Chicago'),
-    ('Iris Davis',     'iris.davis@talkql.dev',     3,  63000, '2022-03-08', 'San Francisco'),
-    ('James Wilson',   'james.wilson@talkql.dev',   4,  91000, '2017-09-19', 'New York'),
-    ('Karen Taylor',   'karen.taylor@talkql.dev',   1, 110000, '2016-04-22', 'San Francisco'),
-    ('Leo Anderson',   'leo.anderson@talkql.dev',   2,  69000, '2021-11-05', 'Austin'),
-    ('Mia Thomas',     'mia.thomas@talkql.dev',     4,  87000, '2019-12-17', 'Chicago'),
-    ('Nathan Jackson', 'nathan.jackson@talkql.dev', 1,  99000, '2018-07-03', 'New York'),
-    ('Olivia Harris',  'olivia.harris@talkql.dev',  3,  67000, '2020-10-28', 'Austin'),
-    ('Paul Clark',     'paul.clark@talkql.dev',     2,  74000, '2017-02-14', 'San Francisco'),
-    ('Quinn Lewis',    'quinn.lewis@talkql.dev',    4,  93000, '2021-05-19', 'New York'),
-    ('Rachel Walker',  'rachel.walker@talkql.dev',  1, 105000, '2015-08-11', 'Chicago'),
-    ('Sam Hall',       'sam.hall@talkql.dev',       3,  61000, '2022-07-22', 'San Francisco'),
-    ('Tina Young',     'tina.young@talkql.dev',     2,  76000, '2019-01-09', 'New York')
+    ('Alice Johnson',  'alice.johnson@sqliqs.dev',  1,  95000, '2019-03-15', 'San Francisco'),
+    ('Bob Smith',      'bob.smith@sqliqs.dev',      1,  88000, '2020-07-01', 'Austin'),
+    ('Carol White',    'carol.white@sqliqs.dev',    2,  72000, '2018-11-20', 'New York'),
+    ('David Lee',      'david.lee@sqliqs.dev',      1, 102000, '2017-05-10', 'San Francisco'),
+    ('Eva Martinez',   'eva.martinez@sqliqs.dev',   3,  65000, '2021-01-12', 'Chicago'),
+    ('Frank Chen',     'frank.chen@sqliqs.dev',     2,  78000, '2019-08-25', 'New York'),
+    ('Grace Kim',      'grace.kim@sqliqs.dev',      1,  97000, '2020-02-14', 'Austin'),
+    ('Henry Brown',    'henry.brown@sqliqs.dev',    4,  85000, '2018-06-30', 'Chicago'),
+    ('Iris Davis',     'iris.davis@sqliqs.dev',     3,  63000, '2022-03-08', 'San Francisco'),
+    ('James Wilson',   'james.wilson@sqliqs.dev',   4,  91000, '2017-09-19', 'New York'),
+    ('Karen Taylor',   'karen.taylor@sqliqs.dev',   1, 110000, '2016-04-22', 'San Francisco'),
+    ('Leo Anderson',   'leo.anderson@sqliqs.dev',   2,  69000, '2021-11-05', 'Austin'),
+    ('Mia Thomas',     'mia.thomas@sqliqs.dev',     4,  87000, '2019-12-17', 'Chicago'),
+    ('Nathan Jackson', 'nathan.jackson@sqliqs.dev', 1,  99000, '2018-07-03', 'New York'),
+    ('Olivia Harris',  'olivia.harris@sqliqs.dev',  3,  67000, '2020-10-28', 'Austin'),
+    ('Paul Clark',     'paul.clark@sqliqs.dev',     2,  74000, '2017-02-14', 'San Francisco'),
+    ('Quinn Lewis',    'quinn.lewis@sqliqs.dev',    4,  93000, '2021-05-19', 'New York'),
+    ('Rachel Walker',  'rachel.walker@sqliqs.dev',  1, 105000, '2015-08-11', 'Chicago'),
+    ('Sam Hall',       'sam.hall@sqliqs.dev',       3,  61000, '2022-07-22', 'San Francisco'),
+    ('Tina Young',     'tina.young@sqliqs.dev',     2,  76000, '2019-01-09', 'New York')
   `;
 
   await sql`

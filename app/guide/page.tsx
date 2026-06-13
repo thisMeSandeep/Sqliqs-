@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { MarkdownPage } from "@/components/content/markdown-page";
 
 export const metadata: Metadata = {
-  title: "Guide — Talkql",
-  description: "How to use Talkql effectively, keep your data safe, and what to know about its limits.",
+  title: "Guide — Sqliqs",
+  description: "How to use Sqliqs effectively, keep your data safe, and what to know about its limits.",
 };
 
 export default async function GuidePage() {
@@ -13,7 +13,7 @@ export default async function GuidePage() {
   return (
     <MarkdownPage
       title="User Guide"
-      subtitle="How to get the most out of Talkql."
+      subtitle="How to get the most out of Sqliqs."
       content={content}
     />
   );

@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { MarkdownPage } from "@/components/content/markdown-page";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Talkql",
-  description: "How Talkql handles your data, keys, and credentials.",
+  title: "Privacy Policy — Sqliqs",
+  description: "How Sqliqs handles your data, keys, and credentials.",
 };
 
 // Astro-style: read the Markdown source from disk at build time and render it as

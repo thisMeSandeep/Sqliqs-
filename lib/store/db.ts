@@ -31,22 +31,22 @@ export type Session = {
   createdAt: number;
 };
 
-interface TalkqlDB extends DBSchema {
+interface SqliqsDB extends DBSchema {
   projects: { key: string; value: Project };
   settings: { key: string; value: GlobalSettings };
   sessions: { key: string; value: Session; indexes: { byProject: string } };
 }
 
-const DB_NAME = "talkql";
+const DB_NAME = "sqliqs";
 const DB_VERSION = 1;
 
-let dbPromise: Promise<IDBPDatabase<TalkqlDB>> | null = null;
+let dbPromise: Promise<IDBPDatabase<SqliqsDB>> | null = null;
 
-export function getDb(): Promise<IDBPDatabase<TalkqlDB>> {
+export function getDb(): Promise<IDBPDatabase<SqliqsDB>> {
   if (typeof indexedDB === "undefined") {
     throw new Error("IndexedDB is only available in the browser");
   }
-  dbPromise ??= openDB<TalkqlDB>(DB_NAME, DB_VERSION, {
+  dbPromise ??= openDB<SqliqsDB>(DB_NAME, DB_VERSION, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("projects")) {
         db.createObjectStore("projects", { keyPath: "id" });

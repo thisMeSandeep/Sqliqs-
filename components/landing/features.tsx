@@ -13,17 +13,17 @@ const FEATURES: Feature[] = [
   {
     title: "Chat with your data",
     body: "Ask follow-up questions, drill into results, and get a plain-English narrative alongside every query. Your full chat history is saved locally.",
-    img: { src: "/feature-pictures/chat.png", w: 1536, h: 1024, alt: "Talkql chat answering a question with a result table" },
+    img: { src: "/feature-pictures/chat.png", w: 1536, h: 1024, alt: "Sqliqs chat answering a question with a result table" },
   },
   {
     title: "Visualize anything instantly",
-    body: "Describe what you want to see. Talkql picks the right chart type and fills it with your data — switch chart types manually anytime.",
+    body: "Describe what you want to see. Sqliqs picks the right chart type and fills it with your data — switch chart types manually anytime.",
     img: { src: "/feature-pictures/chart.png", w: 1693, h: 929, alt: "A line chart rendered from a natural-language request" },
     flip: true,
   },
   {
     title: "Generate full reports",
-    body: "Ask for a report in one sentence. Talkql queries your database, writes the narrative, and formats it as a polished document with charts. Export as PDF or Markdown.",
+    body: "Ask for a report in one sentence. Sqliqs queries your database, writes the narrative, and formats it as a polished document with charts. Export as PDF or Markdown.",
     img: { src: "/feature-pictures/report.png", w: 1402, h: 1122, alt: "A formatted report with headings, metrics, and a chart" },
   },
 ];

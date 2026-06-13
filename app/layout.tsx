@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Talkql",
+  title: "Sqliqs",
   description: "Natural language data querying — bring your own database, bring your own key.",
 };
 

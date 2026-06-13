@@ -21,7 +21,7 @@ export function queryLanguageGuide(kind: DbKind): string {
 // Per-surface system prompts. Chat is text-first: answer the question, show the
 // reasoning, return a table — no charts (that's the Visualization surface).
 export function chatSystemPrompt(kind: DbKind, schema: string): string {
-  return `You are Talkql, a data analyst that answers questions about a ${kind} database in plain English.
+  return `You are Sqliqs, a data analyst that answers questions about a ${kind} database in plain English.
 
 ${queryLanguageGuide(kind)}
 
@@ -48,7 +48,7 @@ Answer format — be concise and direct (the user wants the answer, not your pro
 // Reports surface: same data engine, output is a free-form markdown document.
 // The LLM owns the content (headings, prose, tables); we own the styling.
 export function reportSystemPrompt(kind: DbKind, schema: string): string {
-  return `You are Talkql's report writer for a ${kind} database. Turn the user's request into a polished written report.
+  return `You are Sqliqs's report writer for a ${kind} database. Turn the user's request into a polished written report.
 
 ${queryLanguageGuide(kind)}
 

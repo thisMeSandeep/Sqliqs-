@@ -7,7 +7,7 @@ import type { ProviderId } from "./types";
 // NOTE: model ids drift — verify each against the provider's own docs before
 // trusting in production. The free OpenRouter entry is the only one confirmed.
 // Tier powers the picker grouping; every entry supports tool calls + structured
-// output (the two things Talkql needs). See docs/DESIGN.md for the rationale and
+// output (the two things Sqliqs needs). See docs/DESIGN.md for the rationale and
 // the per-provider "verify these IDs" note.
 export type ModelTier = "free" | "cheap" | "moderate" | "premium";
 

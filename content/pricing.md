@@ -1,8 +1,8 @@
-Talkql is **free**. We don't charge you anything to use it — no subscriptions, no seats, no paywalled features, no trials that expire. Everything the product does is available to everyone.
+Sqliqs is **free**. We don't charge you anything to use it — no subscriptions, no seats, no paywalled features, no trials that expire. Everything the product does is available to everyone.
 
 ## So how does it work?
 
-Talkql is **bring-your-own-key (BYOK)**. Instead of us reselling AI access with a markup, you connect your own API key from a model provider, and you pay that provider directly for what you use. We never sit in the middle of that bill and we never take a cut.
+Sqliqs is **bring-your-own-key (BYOK)**. Instead of us reselling AI access with a markup, you connect your own API key from a model provider, and you pay that provider directly for what you use. We never sit in the middle of that bill and we never take a cut.
 
 That means:
 
@@ -13,7 +13,7 @@ You stay in full control of your spending — set limits with your provider, swi
 
 ## Start free with the built-in model
 
-Don't have a key yet? You can use Talkql's **built-in free model** with no key at all — perfect for trying it out or light use.
+Don't have a key yet? You can use Sqliqs's **built-in free model** with no key at all — perfect for trying it out or light use.
 
 Because it's shared and free, it comes with trade-offs:
 
@@ -21,7 +21,7 @@ Because it's shared and free, it comes with trade-offs:
 - **Slower responses** — it's not prioritized the way a paid key is.
 - **Lighter reasoning** — fine for simple questions, less reliable on complex ones.
 
-When you're ready to use Talkql seriously, add your own key.
+When you're ready to use Sqliqs seriously, add your own key.
 
 ## Better models, better answers
 

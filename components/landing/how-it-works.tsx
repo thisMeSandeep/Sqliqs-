@@ -15,7 +15,7 @@ const STEPS = [
   {
     n: "03",
     title: "Ask in plain English",
-    body: "Type a question the way you'd say it. Talkql reads your schema and writes the read-only query for you.",
+    body: "Type a question the way you'd say it. Sqliqs reads your schema and writes the read-only query for you.",
   },
   {
     n: "04",

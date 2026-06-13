@@ -46,7 +46,7 @@ export function Footer() {
       </Container>
       <div className="border-[#222222] border-t">
         <Container className="py-6">
-          <p className="text-[#666666] text-sm">© {new Date().getFullYear()} Talkql. All rights reserved.</p>
+          <p className="text-[#666666] text-sm">© {new Date().getFullYear()} Sqliqs. All rights reserved.</p>
         </Container>
       </div>
     </footer>

@@ -1,15 +1,15 @@
-Talkql is built so that your data and credentials stay with you. This policy explains exactly what we do — and, more importantly, don't do — with your information.
+Sqliqs is built so that your data and credentials stay with you. This policy explains exactly what we do — and, more importantly, don't do — with your information.
 
 ## The short version
 
 - We never store your database connection strings, API keys, or query results on our servers.
 - Those live only in your own browser, and are sent over an encrypted connection solely to run the request you asked for.
-- Every query we generate is **read-only** — Talkql cannot change or delete your data.
+- Every query we generate is **read-only** — Sqliqs cannot change or delete your data.
 - We don't sell your data, run ad trackers, or build a profile on you.
 
 ## What stays on your device
 
-Talkql is a bring-your-own-key (BYOK) tool. The following are stored **only in your browser** (via IndexedDB) and never transmitted to or saved on our servers:
+Sqliqs is a bring-your-own-key (BYOK) tool. The following are stored **only in your browser** (via IndexedDB) and never transmitted to or saved on our servers:
 
 - **Database connection strings** for the databases you connect.
 - **LLM API keys** for the model provider you choose.
@@ -33,14 +33,14 @@ We use [Clerk](https://clerk.com) to handle sign-up and sign-in. Clerk stores th
 ## Third parties your data reaches
 
 - **Your LLM provider** (e.g. OpenRouter, Anthropic, OpenAI, Google, xAI, DeepSeek) — receives your prompt and schema context to generate a response, billed to your own key.
-- **Your database** — receives the read-only queries Talkql generates.
+- **Your database** — receives the read-only queries Sqliqs generates.
 - **Clerk** — handles authentication.
 
-Each operates under its own terms and privacy policy. Talkql is not responsible for how these third parties process data once it reaches them.
+Each operates under its own terms and privacy policy. Sqliqs is not responsible for how these third parties process data once it reaches them.
 
 ## The Playground
 
-The public Playground runs against a hosted sample database with a shared free model, so you can try Talkql without logging in or supplying a key. It contains only dummy data — please don't enter real or sensitive information there.
+The public Playground runs against a hosted sample database with a shared free model, so you can try Sqliqs without logging in or supplying a key. It contains only dummy data — please don't enter real or sensitive information there.
 
 ## Cookies
 

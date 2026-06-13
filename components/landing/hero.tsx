@@ -16,7 +16,7 @@ export function Hero() {
         <Reveal delay={0.1} className="w-full">
           <Image
             src="/feature-pictures/chat.png"
-            alt="Talkql answering a natural-language question with a result table"
+            alt="Sqliqs answering a natural-language question with a result table"
             width={1536}
             height={1024}
             priority
@@ -28,6 +28,10 @@ export function Hero() {
       <Container className="relative z-10 flex flex-col gap-14 py-20 lg:py-32">
         <Reveal>
           <div className="max-w-xl">
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#52E8A2]/30 bg-[#52E8A2]/10 px-3 py-1 font-medium text-[#52E8A2] text-xs">
+              <span className="size-1.5 rounded-full bg-[#52E8A2]" />
+              100% free — you only pay your own model provider
+            </span>
             <Display>
               Ask your database.
               <br />
@@ -54,7 +58,7 @@ export function Hero() {
         <Reveal delay={0.1} className="lg:hidden">
           <Image
             src="/feature-pictures/chat.png"
-            alt="Talkql answering a natural-language question with a result table"
+            alt="Sqliqs answering a natural-language question with a result table"
             width={1536}
             height={1024}
             className="h-auto w-full mix-blend-lighten"
