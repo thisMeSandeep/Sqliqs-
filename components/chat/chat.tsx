@@ -133,17 +133,22 @@ export function Chat({
                     }
 
                     if (part.type === "tool-run_query") {
-                      const sql =
+                      const isMongo = config?.kind === "mongodb";
+                      const query =
                         part.state === "input-available" || part.state === "output-available"
-                          ? part.input.sql
+                          ? part.input.query
                           : undefined;
                       return (
                         <Tool key={key} defaultOpen={false}>
-                          <ToolHeader type="tool-run_query" state={part.state} title="SQL query" />
+                          <ToolHeader
+                            type="tool-run_query"
+                            state={part.state}
+                            title={isMongo ? "Query" : "SQL query"}
+                          />
                           <ToolContent>
-                            {sql && (
+                            {query && (
                               <div className="p-3">
-                                <CodeBlock code={sql} language="sql" />
+                                <CodeBlock code={query} language={isMongo ? "json" : "sql"} />
                               </div>
                             )}
                             {part.state === "output-available" && (

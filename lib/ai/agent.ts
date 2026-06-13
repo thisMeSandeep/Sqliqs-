@@ -24,7 +24,7 @@ export function createChatAgent({ kind, schema, adapter, model }: ChatAgentInput
   return new ToolLoopAgent({
     model: getLanguageModel(model),
     instructions: chatSystemPrompt(kind, schema),
-    tools: { run_query: createRunQueryTool(adapter) },
+    tools: { run_query: createRunQueryTool(adapter, kind) },
     stopWhen: stepCountIs(10),
   });
 }
@@ -38,7 +38,7 @@ export function createReportAgent({ kind, schema, adapter, model }: ChatAgentInp
   return new ToolLoopAgent({
     model: getLanguageModel(model),
     instructions: reportSystemPrompt(kind, schema),
-    tools: { run_query: createRunQueryTool(adapter) },
+    tools: { run_query: createRunQueryTool(adapter, kind) },
     stopWhen: stepCountIs(10),
   });
 }
@@ -57,7 +57,7 @@ export function createVisualizeDataAgent({ kind, schema, adapter, model }: ChatA
   return new ToolLoopAgent({
     model: getLanguageModel(model),
     instructions: visualizeDataPrompt(kind, schema),
-    tools: { run_query: createRunQueryTool(adapter) },
+    tools: { run_query: createRunQueryTool(adapter, kind) },
     stopWhen: stepCountIs(6),
   });
 }

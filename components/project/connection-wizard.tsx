@@ -25,10 +25,18 @@ import type { ModelChoice } from "@/lib/ai/types";
 // public/databases/<file>.svg — postgres is enabled; the rest land in Phase 8.
 const DB_OPTIONS: { kind: DbKind; label: string; file: string; enabled: boolean }[] = [
   { kind: "postgres", label: "PostgreSQL", file: "postgresql", enabled: true },
-  { kind: "mysql", label: "MySQL", file: "mysql-wordmark-light", enabled: false },
-  { kind: "sqlite", label: "SQLite", file: "sqlite", enabled: false },
-  { kind: "mongodb", label: "MongoDB", file: "mongodb", enabled: false },
+  { kind: "mysql", label: "MySQL", file: "mysql-wordmark-light", enabled: true },
+  { kind: "sqlite", label: "SQLite", file: "sqlite", enabled: true },
+  { kind: "mongodb", label: "MongoDB", file: "mongodb", enabled: true },
 ];
+
+// Per-engine example connection strings for the input placeholder.
+const CONN_PLACEHOLDER: Record<DbKind, string> = {
+  postgres: "postgresql://user:pass@host:5432/db",
+  mysql: "mysql://user:pass@host:3306/db",
+  sqlite: "file:./dev.db or libsql://your-db.turso.io?authToken=XXX",
+  mongodb: "mongodb+srv://user:pass@cluster/db",
+};
 
 type TestState = { status: "idle" | "testing" | "ok" | "error"; message?: string };
 
@@ -38,6 +46,24 @@ export function ConnectionWizard({
   onCreated,
 }: {
   open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onCreated: (id: string) => void;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-lg">
+        {/* The form state lives in WizardForm, which Radix unmounts when the
+            dialog closes — so each open starts fresh with no reset effect. */}
+        {open && <WizardForm onOpenChange={onOpenChange} onCreated={onCreated} />}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function WizardForm({
+  onOpenChange,
+  onCreated,
+}: {
   onOpenChange: (open: boolean) => void;
   onCreated: (id: string) => void;
 }) {
@@ -51,20 +77,13 @@ export function ConnectionWizard({
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
 
-  // Reset everything when the wizard opens; seed the override from the global default.
+  // Seed the model choice from the global default (external data → effect is fine).
   useEffect(() => {
-    if (!open) return;
-    setStep(1);
-    setKind("postgres");
-    setConnectionString("");
-    setTest({ status: "idle" });
-    setInheritGlobal(true);
-    setName("");
     getGlobalSettings().then((g) => {
       setGlobalDefault(g);
       setOverride(g);
     });
-  }, [open]);
+  }, []);
 
   async function runTest() {
     setTest({ status: "testing" });
@@ -112,10 +131,9 @@ export function ConnectionWizard({
     findModel(globalDefault.provider, globalDefault.model)?.label ?? globalDefault.model;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>New project — step {step} of 4</DialogTitle>
+    <>
+      <DialogHeader>
+        <DialogTitle>New project — step {step} of 4</DialogTitle>
           <DialogDescription>
             {step === 1 && "Choose the database you want to connect."}
             {step === 2 && "Enter the connection string and test it."}
@@ -156,7 +174,7 @@ export function ConnectionWizard({
               <Input
                 value={connectionString}
                 onChange={(e) => onConnChange(e.target.value)}
-                placeholder="postgresql://user:pass@host:5432/db"
+                placeholder={CONN_PLACEHOLDER[kind]}
               />
               <p className="text-muted-foreground text-xs">
                 Stored only in your browser. Sent per request, never saved on our servers.
@@ -223,7 +241,6 @@ export function ConnectionWizard({
             </Button>
           )}
         </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    </>
   );
 }
