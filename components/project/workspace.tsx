@@ -5,10 +5,11 @@ import { BarChart3Icon, FileTextIcon, MessageSquareIcon, NetworkIcon } from "luc
 import { Chat } from "@/components/chat/chat";
 import { Visualization } from "@/components/visualization/visualization";
 import { Reports } from "@/components/reports/reports";
+import { ErDiagram } from "@/components/er-diagram/er-diagram";
 
-// The project workspace shell: switchable surfaces over one database. Chat is
-// live now; Visualization / Reports / ER diagram land in Phases 3–5 and slot
-// into these tabs. Same shell will wrap real projects in Phase 7.
+// The project workspace shell: switchable surfaces over one database — Chat,
+// Visualization, Reports, ER diagram. The same shell will wrap real projects in
+// Phase 7; here it runs against the playground's sample DB.
 export function Workspace() {
   return (
     <Tabs defaultValue="chat" className="flex h-full flex-col gap-0">
@@ -38,17 +39,9 @@ export function Workspace() {
       <TabsContent value="reports" className="min-h-0 flex-1">
         <Reports />
       </TabsContent>
-      <TabsContent value="er" className="flex-1">
-        <ComingSoon surface="ER diagram" />
+      <TabsContent value="er" className="min-h-0 flex-1">
+        <ErDiagram />
       </TabsContent>
     </Tabs>
-  );
-}
-
-function ComingSoon({ surface }: { surface: string }) {
-  return (
-    <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
-      {surface} — coming soon
-    </div>
   );
 }
