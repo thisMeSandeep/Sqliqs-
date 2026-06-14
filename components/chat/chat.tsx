@@ -105,8 +105,13 @@ export function Chat({
     () => new DefaultChatTransport<ChatUIMessage>({ api: "/api/chat", body: toRequestBody(config) }),
     [config]
   );
+  // Only pass `id` when we actually have one (project mode). Passing
+  // `id: undefined` still puts the key in options, and since Chat auto-generates
+  // a real id, useChat's guard (`chatRef.current.id !== options.id`) is true on
+  // every render — so it rebuilds the chat each render and the playground's
+  // messages/stream get wiped on submit. Omitting the key keeps it stable.
   const { messages, sendMessage, status, error, regenerate, setMessages } = useChat<ChatUIMessage>({
-    id: session?.id,
+    ...(session?.id ? { id: session.id } : {}),
     messages: (session?.messages as ChatUIMessage[]) ?? [],
     transport,
   });
