@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeftIcon, CheckIcon } from "lucide-react";
+import { ArrowLeftIcon, CheckIcon, KeyRoundIcon } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,16 +19,22 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ModelKeyPicker } from "@/components/project/model-key-picker";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { FREE_MODEL_CHOICE, getGlobalSettings, setGlobalSettings } from "@/lib/store/settings";
+import {
+  clearStoredKeys,
+  FREE_MODEL_CHOICE,
+  getGlobalSettings,
+  setGlobalSettings,
+} from "@/lib/store/settings";
 import { clearAll } from "@/lib/store/db";
 import type { ModelChoice } from "@/lib/ai/types";
 
-// Global settings as a full page (was a cramped dialog). Holds the default model
+// Global settings as a full page  Holds the default model
 // new projects inherit and the destructive "clear all data" escape hatch.
 export function SettingsView() {
   const router = useRouter();
   const [choice, setChoice] = useState<ModelChoice>(FREE_MODEL_CHOICE);
   const [saved, setSaved] = useState(false);
+  const [keyMsg, setKeyMsg] = useState<string | null>(null);
 
   useEffect(() => {
     getGlobalSettings().then(setChoice);
@@ -38,6 +44,18 @@ export function SettingsView() {
     await setGlobalSettings(choice);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  }
+
+  async function clearKeys() {
+    const removed = await clearStoredKeys();
+    // Reflect the now key-less default in the picker.
+    setChoice(await getGlobalSettings());
+    setKeyMsg(
+      removed === 0
+        ? "No saved keys to remove."
+        : `Removed ${removed} saved key${removed === 1 ? "" : "s"}.`
+    );
+    setTimeout(() => setKeyMsg(null), 3000);
   }
 
   async function wipe() {
@@ -76,6 +94,46 @@ export function SettingsView() {
             {saved && (
               <span className="flex items-center gap-1 text-emerald-600 text-sm dark:text-emerald-400">
                 <CheckIcon className="size-4" /> Saved
+              </span>
+            )}
+          </div>
+        </section>
+
+        <Separator />
+
+        <section className="space-y-4">
+          <div>
+            <h2 className="font-semibold text-lg tracking-tight">API keys</h2>
+            <p className="mt-1 text-muted-foreground text-sm">
+              Remove every saved provider key from this browser — your default and any per-project
+              overrides. Projects, settings, and chat history stay; you&apos;ll fall back to the free
+              model until you add a key again.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">
+                  <KeyRoundIcon className="size-4" /> Clear saved keys
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Clear saved keys?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This removes every provider API key stored in this browser — the global default
+                    and all project overrides. Your projects, settings, and chat history are kept.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={clearKeys}>Clear keys</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            {keyMsg && (
+              <span className="flex items-center gap-1 text-emerald-600 text-sm dark:text-emerald-400">
+                <CheckIcon className="size-4" /> {keyMsg}
               </span>
             )}
           </div>

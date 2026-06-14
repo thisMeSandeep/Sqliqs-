@@ -25,3 +25,33 @@ export async function setGlobalSettings(model: ModelChoice): Promise<void> {
 export async function resolveModel(project: Project): Promise<ModelChoice> {
   return project.model ?? (await getGlobalSettings());
 }
+
+// Strip every saved provider key — the global default plus all per-project
+// overrides — without deleting projects, settings, or history. Provider/model
+// selections are kept; only `apiKey` is removed, so surfaces fall back to the
+// free tier. Returns how many keys were cleared.
+export async function clearStoredKeys(): Promise<number> {
+  const db = await getDb();
+  let removed = 0;
+
+  const global = await db.get("settings", GLOBAL_KEY);
+  if (global?.model.apiKey) {
+    const model = { ...global.model };
+    delete model.apiKey;
+    await db.put("settings", { ...global, model });
+    removed++;
+  }
+
+  const projects = await db.getAll("projects");
+  await Promise.all(
+    projects.map(async (project) => {
+      if (!project.model?.apiKey) return;
+      const model = { ...project.model };
+      delete model.apiKey;
+      await db.put("projects", { ...project, model });
+      removed++;
+    })
+  );
+
+  return removed;
+}

@@ -51,7 +51,7 @@ export function ConnectionWizard({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-xl">
+      <DialogContent className="max-h-[85vh] gap-6 overflow-y-auto sm:max-w-xl">
         {/* The form state lives in WizardForm, which Radix unmounts when the
             dialog closes — so each open starts fresh with no reset effect. */}
         {open && <WizardForm onOpenChange={onOpenChange} onCreated={onCreated} />}
@@ -132,18 +132,19 @@ function WizardForm({
 
   return (
     <>
-      <DialogHeader>
+      <DialogHeader className="gap-1.5">
         <DialogTitle>New project — step {step} of 4</DialogTitle>
-          <DialogDescription>
-            {step === 1 && "Choose the database you want to connect."}
-            {step === 2 && "Enter the connection string and test it."}
-            {step === 3 && "Choose the model for this project."}
-            {step === 4 && "Name your project."}
-          </DialogDescription>
-        </DialogHeader>
+        <DialogDescription>
+          {step === 1 && "Choose the database you want to connect."}
+          {step === 2 && "Enter the connection string and test it."}
+          {step === 3 && "Choose the model for this project."}
+          {step === 4 && "Name your project."}
+        </DialogDescription>
+      </DialogHeader>
 
+      <div className="min-h-[180px] py-1">
         {step === 1 && (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             {DB_OPTIONS.map((opt) => (
               <button
                 key={opt.kind}
@@ -151,13 +152,13 @@ function WizardForm({
                 disabled={!opt.enabled}
                 onClick={() => setKind(opt.kind)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg border p-3 text-left transition",
+                  "flex items-center gap-3 rounded-lg border p-4 text-left transition",
                   kind === opt.kind && opt.enabled ? "border-primary ring-1 ring-primary" : "",
                   opt.enabled ? "hover:bg-muted/50" : "cursor-not-allowed opacity-50"
                 )}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/databases/${opt.file}.svg`} alt="" className="size-7" />
+                <img src={`/databases/${opt.file}.svg`} alt="" className="size-8" />
                 <div>
                   <div className="font-medium text-sm">{opt.label}</div>
                   {!opt.enabled && <div className="text-muted-foreground text-xs">Coming soon</div>}
@@ -168,8 +169,8 @@ function WizardForm({
         )}
 
         {step === 2 && (
-          <div className="space-y-3">
-            <div className="space-y-1.5">
+          <div className="space-y-5">
+            <div className="space-y-2">
               <Label>Connection string</Label>
               <Input
                 value={connectionString}
@@ -205,9 +206,9 @@ function WizardForm({
         )}
 
         {step === 3 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
+          <div className="space-y-5">
+            <div className="flex items-center justify-between gap-4 rounded-lg border p-4">
+              <div className="space-y-1">
                 <p className="font-medium text-sm">Use my default model</p>
                 <p className="text-muted-foreground text-xs">Inherit the global default ({globalLabel}).</p>
               </div>
@@ -218,13 +219,14 @@ function WizardForm({
         )}
 
         {step === 4 && (
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label>Project name</Label>
             <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="My database" />
           </div>
         )}
+      </div>
 
-        <DialogFooter className="sm:justify-between">
+      <DialogFooter className="sm:justify-between">
           <Button
             variant="ghost"
             onClick={() => (step === 1 ? onOpenChange(false) : setStep(step - 1))}
