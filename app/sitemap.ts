@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const SITE_URL = "https://sqliqs.com";
+import { SITE_URL } from "@/lib/seo";
 
 // The public, indexable routes. App surfaces (dashboard/projects/settings) are
 // per-browser and intentionally excluded.

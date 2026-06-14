@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34E0A1"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="#0A0A0A"/>
+  <g transform="translate(-38.74 -2.95) scale(0.105263)">
+  <path d="M520,290 L410,160 L520,70 L630,200 Z" fill-rule="evenodd" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linejoin="round" />
+  <text x="517.5867342221661" y="160.1607340457934" text-anchor="middle" font-family="Geist Variable, system-ui, sans-serif" font-size="26" font-weight="600" letter-spacing="0.3" dominant-baseline="hanging" transform="translate(517.5867342221661 170.4333752277392) rotate(0) skewX(0) skewY(0) scale(4.9398911482548 4.755342486948082) translate(-517.5867342221661 -170.4333752277392)" fill="url(#brand)">Q</text>
+</g>
+</svg>

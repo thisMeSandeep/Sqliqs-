@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const SITE_URL = "https://sqliqs.com";
+import { SITE_URL } from "@/lib/seo";
 
 // Crawl the public marketing + content pages; keep the app surfaces (which are
 // per-browser and have no SEO value) and the API out of the index.

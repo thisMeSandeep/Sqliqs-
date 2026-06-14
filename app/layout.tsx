@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { APP_NAME, APP_TITLE, DESCRIPTION, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,18 +14,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://sqliqs.com";
-const DESCRIPTION =
-  "Ask your database in plain English and get answers, charts, and reports. No SQL, no setup — bring your own key. Works with PostgreSQL, MySQL, SQLite, and MongoDB.";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Sqliqs — Ask your database in plain English",
-    template: "%s · Sqliqs",
+    default: APP_TITLE,
+    template: `%s · ${APP_NAME}`,
   },
   description: DESCRIPTION,
-  applicationName: "Sqliqs",
+  applicationName: APP_NAME,
   keywords: [
     "natural language to SQL",
     "query database in plain English",
@@ -37,26 +34,50 @@ export const metadata: Metadata = {
     "BYOK",
     "database chat",
   ],
-  authors: [{ name: "Sqliqs" }],
+  authors: [{ name: APP_NAME }],
+  manifest: "/manifest.webmanifest",
   alternates: { canonical: "/" },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    title: APP_NAME,
+    statusBarStyle: "black-translucent",
   },
   openGraph: {
     type: "website",
-    siteName: "Sqliqs",
+    siteName: APP_NAME,
     url: SITE_URL,
-    title: "Sqliqs — Ask your database in plain English",
+    title: APP_TITLE,
     description: DESCRIPTION,
-    images: [{ url: "/logo.png", width: 456, height: 456, alt: "Sqliqs" }],
   },
   twitter: {
-    card: "summary",
-    title: "Sqliqs — Ask your database in plain English",
+    card: "summary_large_image",
+    title: APP_TITLE,
     description: DESCRIPTION,
-    images: ["/logo.png"],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+  colorScheme: "dark light",
+};
+
+// Structured data so search engines understand this is a free web app.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: APP_NAME,
+  description: DESCRIPTION,
+  url: SITE_URL,
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
 
 export default function RootLayout({
@@ -71,6 +92,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
