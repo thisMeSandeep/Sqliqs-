@@ -22,6 +22,7 @@ import {
   exportReportPdf,
   reportToCsv,
 } from "@/lib/export/report";
+import { Loader } from "@/components/brand/loader";
 import { ReportDocument } from "./report-document";
 
 // Schema-agnostic prompts — the model reads the live schema, so these fit any
@@ -92,8 +93,8 @@ export function Reports({ config }: { config?: ConnectionConfig }) {
           )}
 
           {isWorking && !markdown && (
-            <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
-              Gathering data and writing your report…
+            <div className="flex h-full items-center justify-center">
+              <Loader label="Gathering data and writing your report…" />
             </div>
           )}
 

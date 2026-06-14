@@ -9,9 +9,6 @@ import { Reports } from "@/components/reports/reports";
 import { ErDiagram } from "@/components/er-diagram/er-diagram";
 import type { ConnectionConfig } from "@/lib/ai/types";
 
-// The project workspace shell: switchable surfaces over one database — Chat,
-// Visualization, Reports, ER diagram. The same shell will wrap real projects in
-// Phase 7; here it runs against the playground's sample DB.
 export function Workspace({
   config,
   projectId,

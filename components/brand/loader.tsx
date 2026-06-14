@@ -1,9 +1,7 @@
 import { cn } from "@/lib/utils";
 
-const GRADIENT = "#34E0A1, #2EE0B8, #22D3EE";
-
 // A branded, "thinking" loader: two counter-rotating gradient arcs around a
-// pulsing core, wrapped in a soft glow. Tuned to feel like the model is at work
+// pulsing core. Clean and minimal — no glow. Tuned to feel like the model is at work
 // rather than a generic spinner.
 export function Loader({
   size = 40,
@@ -33,12 +31,6 @@ export function Loader({
         className="relative block"
         style={{ width: size, height: size }}
       >
-        {/* Soft glow halo */}
-        <span
-          aria-hidden
-          className="absolute inset-0 animate-loader-pulse rounded-full blur-md"
-          style={{ background: `conic-gradient(from 90deg, ${GRADIENT}, ${GRADIENT.split(", ")[0]})`, opacity: 0.4 }}
-        />
         {/* Outer gradient arc */}
         <span
           aria-hidden

@@ -21,6 +21,7 @@ import { CHART_TYPE_LABELS, CHART_TYPES, type ChartSpec, type ChartType } from "
 import type { ConnectionConfig } from "@/lib/ai/types";
 import { toRequestBody } from "@/lib/ai/request";
 import { exportChartPng, exportChartSvg } from "@/lib/export/chart";
+import { Loader } from "@/components/brand/loader";
 import { ChartView } from "./chart-view";
 
 // Schema-agnostic prompts — the model reads the live schema, so these fit any
@@ -78,8 +79,8 @@ export function Visualization({ config }: { config?: ConnectionConfig }) {
     <div className="flex h-full flex-col">
       <div className="min-h-0 flex-1 overflow-auto p-4">
         {status === "loading" && (
-          <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
-            Building your chart…
+          <div className="flex h-full items-center justify-center">
+            <Loader label="Building your visualization…" />
           </div>
         )}
 
