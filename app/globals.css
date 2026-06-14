@@ -164,6 +164,48 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --animate-loader-spin: loader-spin 1.1s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+  --animate-loader-spin-rev: loader-spin-rev 1.7s linear infinite;
+  --animate-loader-pulse: loader-pulse 1.6s ease-in-out infinite;
+  --animate-loader-orbit: loader-orbit 2.4s linear infinite;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes loader-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loader-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="loader"] *,
+  [data-slot="loader"] {
+    animation-duration: 2.4s !important;
+  }
 }
 
 @layer base {

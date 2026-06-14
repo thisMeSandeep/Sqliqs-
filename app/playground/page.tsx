@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Workspace } from "@/components/project/workspace";
+import { PlaygroundNotice } from "@/components/project/playground-notice";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 
@@ -22,7 +23,7 @@ export default function PlaygroundPage() {
             <Logo /> <span className="text-foreground">Playground</span>
           </h1>
           <p className="text-muted-foreground text-xs">
-            Sample database · no login, no key required
+            Sample database <span>  </span>
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -34,6 +35,7 @@ export default function PlaygroundPage() {
       <div className="min-h-0 flex-1">
         <Workspace />
       </div>
+      <PlaygroundNotice />
     </main>
   );
 }

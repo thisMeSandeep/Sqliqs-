@@ -10,6 +10,7 @@ import { resolveModel } from "@/lib/store/settings";
 import type { Project } from "@/lib/store/db";
 import type { ConnectionConfig } from "@/lib/ai/types";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LoaderScreen } from "@/components/brand/loader";
 import { Workspace } from "./workspace";
 import { ProjectMenu } from "./project-menu";
 
@@ -46,11 +47,7 @@ export function ProjectWorkspace({ id }: { id: string }) {
   }, [load]);
 
   if (state.status === "loading") {
-    return (
-      <main className="flex min-h-dvh items-center justify-center text-muted-foreground text-sm">
-        Loading project…
-      </main>
-    );
+    return <LoaderScreen label="Loading project…" />;
   }
 
   if (state.status === "notfound") {
